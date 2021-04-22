@@ -177,7 +177,7 @@ def try_input(prompt, validate):
 
 
 def generate_xkpassword(
-    wordlist, numwords=6, interactive=False, delimiter="", case="first", no_padding_digits=False, padding_digits_num=2
+    wordlist, numwords=3, interactive=False, delimiter="", case="first", no_padding_digits=False, padding_digits_num=2
 ):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -304,7 +304,7 @@ class XkPassGenArgumentParser(argparse.ArgumentParser):
             "--numwords",
             dest="numwords",
             type=int,
-            default=6,
+            default=3,
             metavar="NUM_WORDS",
             help="Generate passphrases containing exactly NUM_WORDS words.",
         )
