@@ -177,7 +177,7 @@ def try_input(prompt, validate):
 
 
 def generate_xkpassword(
-    wordlist, numwords=6, interactive=False, delimiter="", case="lower", no_padding_digits=False, padding_digits_num=2
+    wordlist, numwords=6, interactive=False, delimiter="", case="first", no_padding_digits=False, padding_digits_num=2
 ):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -385,11 +385,11 @@ class XkPassGenArgumentParser(argparse.ArgumentParser):
             type=str,
             metavar="CASE",
             choices=list(CASE_METHODS.keys()),
-            default="lower",
+            default="first",
             help=(
                 "Choose the method for setting the case of each word "
                 "in the passphrase. "
-                "Choices: {cap_meths} (default: 'lower').".format(
+                "Choices: {cap_meths} (default: 'first').".format(
                     cap_meths=list(CASE_METHODS.keys())
                 )
             ),
