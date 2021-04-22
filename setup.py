@@ -20,7 +20,9 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    entry_points={'console_scripts': ['xkpassgen=xkpassgen.xkpassgen:main']},
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
+    include_package_data=True,
     python_requires=">=3.6",
 )

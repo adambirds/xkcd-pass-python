@@ -1,0 +1,2 @@
+include src/xkpassgen/lib/*
+include src/xkpassgen/static/*
