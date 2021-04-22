@@ -10,14 +10,9 @@ import re
 import sys
 from io import open
 
-from xkpassgen.lib.case import (
-    alternating_case,
-    capitalize_case,
-    first_upper_case,
-    lower_case,
-    random_case,
-    upper_case,
-)
+from xkpassgen.lib.case import (alternating_case, capitalize_case,
+                                first_upper_case, lower_case, random_case,
+                                upper_case)
 
 DEFAULT_WORDFILE = "eff-long"
 
