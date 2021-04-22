@@ -10,8 +10,14 @@ import re
 import sys
 from io import open
 
-from xkpassgen.lib.case import (alternating_case, capitalize_case, first_upper_case,
-                      lower_case, random_case, upper_case)
+from xkpassgen.lib.case import (
+    alternating_case,
+    capitalize_case,
+    first_upper_case,
+    lower_case,
+    random_case,
+    upper_case,
+)
 
 DEFAULT_WORDFILE = "eff-long"
 
@@ -30,6 +36,7 @@ rng = random.SystemRandom
 if sys.version_info[0] >= 3:
     raw_input = input
     xrange = range
+
 
 def validate_options(options):
     """
@@ -151,13 +158,15 @@ def choose_words(wordlist, numwords):
 
     return [rng().choice(wordlist) for i in xrange(numwords)]
 
+
 def generate_random_padding_numbers(padding_digits_num):
     """
     Get random numbers to append to passphrase
     """
-    min = pow(10, padding_digits_num-1)
+    min = pow(10, padding_digits_num - 1)
     max = pow(10, padding_digits_num) - 1
     return rng().randint(a=min, b=max)
+
 
 def try_input(prompt, validate):
     """
@@ -177,7 +186,13 @@ def try_input(prompt, validate):
 
 
 def generate_xkpassword(
-    wordlist, numwords=3, interactive=False, delimiter="", case="first", no_padding_digits=False, padding_digits_num=2
+    wordlist,
+    numwords=3,
+    interactive=False,
+    delimiter="",
+    case="first",
+    no_padding_digits=False,
+    padding_digits_num=2,
 ):
     """
     Generate an XKCD-style password from the words in wordlist.

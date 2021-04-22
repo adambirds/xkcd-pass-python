@@ -1,5 +1,6 @@
 import random
 
+
 def alternating_case(words):
     """
     Set EVERY OTHER word to UPPER case.

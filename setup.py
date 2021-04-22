@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="xkpassgen", # Replace with your own username
+    name="xkpassgen",  # Replace with your own username
     version="0.0.1",
     author="Adam Birds",
     author_email="adam.birds@adbwebdesigns.co.uk",
@@ -20,7 +20,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    entry_points={'console_scripts': ['xkpassgen=xkpassgen.xkpassgen:main']},
+    entry_points={"console_scripts": ["xkpassgen=xkpassgen.xkpassgen:main"]},
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     include_package_data=True,
