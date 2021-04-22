@@ -177,7 +177,7 @@ def try_input(prompt, validate):
 
 
 def generate_xkpassword(
-    wordlist, numwords=6, interactive=False, delimiter=" ", case="lower", padding_digits=False, padding_digits_num=2
+    wordlist, numwords=6, interactive=False, delimiter=" ", case="lower", no_padding_digits=False, padding_digits_num=2
 ):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -187,7 +187,7 @@ def generate_xkpassword(
 
     def gen_passwd():
         words = choose_words(wordlist, numwords)
-        if padding_digits:
+        if not no_padding_digits:
             padding_numbers = generate_random_padding_numbers(padding_digits_num)
             return delimiter.join(set_case(words, method=case)) + str(padding_numbers)
 
@@ -251,7 +251,7 @@ def emit_passwords(wordlist, options):
                 numwords=options.numwords,
                 delimiter=options.delimiter,
                 case=options.case,
-                padding_digits=options.padding_digits,
+                no_padding_digits=options.no_padding_digits,
                 padding_digits_num=options.padding_digits_num,
             ),
             end=options.separator,
@@ -309,12 +309,11 @@ class XkPassGenArgumentParser(argparse.ArgumentParser):
             help="Generate passphrases containing exactly NUM_WORDS words.",
         )
         self.add_argument(
-            "--padding-digits",
+            "--no-padding-digits",
             action="store_true",
-            dest="padding_digits",
+            dest="no_padding_digits",
             default=False,
-            help="Append digits to end of passphrase.",
-            required='--padding-digits-num' in sys.argv,
+            help="Doesn't append digits to end of passphrase.",
         )
         self.add_argument(
             "--padding-digits-num",
