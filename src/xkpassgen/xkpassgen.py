@@ -151,6 +151,13 @@ def choose_words(wordlist, numwords):
 
     return [rng().choice(wordlist) for i in xrange(numwords)]
 
+def generate_random_padding_numbers(padding_digits_num):
+    """
+    Get random numbers to append to passphrase
+    """
+    min = pow(10, padding_digits_num-1)
+    max = pow(10, padding_digits_num) - 1
+    return rng().randint(a=min, b=max)
 
 def try_input(prompt, validate):
     """
@@ -170,7 +177,7 @@ def try_input(prompt, validate):
 
 
 def generate_xkpassword(
-    wordlist, numwords=6, interactive=False, delimiter=" ", case="lower"
+    wordlist, numwords=6, interactive=False, delimiter=" ", case="lower", padding_digits=False, padding_digits_num=2
 ):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -180,6 +187,9 @@ def generate_xkpassword(
 
     def gen_passwd():
         words = choose_words(wordlist, numwords)
+        if padding_digits:
+            padding_numbers = generate_random_padding_numbers(padding_digits_num)
+            return delimiter.join(set_case(words, method=case)) + str(padding_numbers)
 
         return delimiter.join(set_case(words, method=case))
 
@@ -241,6 +251,8 @@ def emit_passwords(wordlist, options):
                 numwords=options.numwords,
                 delimiter=options.delimiter,
                 case=options.case,
+                padding_digits=options.padding_digits,
+                padding_digits_num=options.padding_digits_num,
             ),
             end=options.separator,
         )
@@ -295,6 +307,22 @@ class XkPassGenArgumentParser(argparse.ArgumentParser):
             default=6,
             metavar="NUM_WORDS",
             help="Generate passphrases containing exactly NUM_WORDS words.",
+        )
+        self.add_argument(
+            "--padding-digits",
+            action="store_true",
+            dest="padding_digits",
+            default=False,
+            help="Append digits to end of passphrase.",
+            required='--padding-digits-num' in sys.argv,
+        )
+        self.add_argument(
+            "--padding-digits-num",
+            dest="padding_digits_num",
+            type=int,
+            default=2,
+            metavar="PADDING_DIGITS_NUM",
+            help="Length of digits to append to end of passphrase.",
         )
         self.add_argument(
             "-i",
