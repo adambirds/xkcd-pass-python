@@ -77,4 +77,4 @@ Note that `xkpassgen` can be used with any word file of the correct format: a fi
 
 ## License
 
-This project is released under the [GNU GENERAL PUBLIC LICENSE v3](/LICENSE). However the original code from [redacted/XKCD-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](/LICENSE.BSD).
+This project is released under the [GNU GENERAL PUBLIC LICENSE v3](https://github.com/adambirds/xkcd-password-gen/blob/master/LICENSE). However the original code from [redacted/XKCD-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](https://github.com/adambirds/xkcd-password-gen/blob/master/LICENSE.BSD).
