@@ -1,5 +1,6 @@
 # xkpassgen
 ![build status](https://github.com/adambirds/xkcd-password-gen/actions/workflows/build.yml/badge.svg)
+[![PyPI version](https://badge.fury.io/py/xkpassgen.svg)](https://badge.fury.io/py/xkpassgen)
 
 A flexible and scriptable password generator which generates strong passphrases, inspired by XKCD 936
 
