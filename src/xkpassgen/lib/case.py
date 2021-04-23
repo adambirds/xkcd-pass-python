@@ -6,7 +6,7 @@ def case_alternating(words):
     Set EVERY OTHER word to UPPER case.
     """
     return [
-        word.upper() if i % 2 == 0 else word for i, word in enumerate(lower_case(words))
+        word.upper() if i % 2 == 0 else word for i, word in enumerate(case_lower(words))
     ]
 
 
@@ -53,4 +53,4 @@ def case_random(words, testing=False):
         else:
             return word
 
-    return [make_upper(word) for word in lower_case(words)]
+    return [make_upper(word) for word in case_lower(words)]

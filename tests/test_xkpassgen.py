@@ -7,7 +7,7 @@ import unittest
 import unittest.mock as mock
 
 
-from xkpassgen import xkpassgen
+from src.xkpassgen import xkpassgen
 
 
 WORDFILE = 'src/xkpassgen/static/eff-long'
@@ -143,6 +143,11 @@ class TestEmitPasswords(unittest.TestCase):
 
 class TestEntropyInformation(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
+
+    @staticmethod
+    # def run_xkpassgen_process(*args):
+    #     process = Popen(["xkpassgen", "-V", "-i"], stdout=PIPE, stdin=PIPE)
+    #     return process.communicate('\n'.join(args))[0]
 
     @staticmethod
     def test_entropy_printout_valid_input(self):

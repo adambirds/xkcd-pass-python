@@ -95,7 +95,7 @@ def set_case(words, method="lower", testing=False):
                         working by giving different word lists.
     """
     if (method == "random") and (testing):
-        return random_case(words, testing=True)
+        return case_random(words, testing=True)
     else:
         return CASE_METHODS[method](words)
 
