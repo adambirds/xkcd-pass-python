@@ -15,9 +15,10 @@ setuptools.setup(
     project_urls={
         "Bug Tracker": "https://github.com/adambirds/xkcd-password-gen/issues",
     },
+    license="LGPLv3",
     classifiers=[
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
     entry_points={"console_scripts": ["xkpassgen=xkpassgen.xkpassgen:main"]},
