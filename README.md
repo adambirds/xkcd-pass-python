@@ -74,6 +74,9 @@ Note that `xkpassgen` can be used with any word file of the correct format: a fi
 
 * **Version 1.0.0**
     * Initial Release
+* **Version 1.0.1**
+    * Fixed license display on PyPI.
+    * Fixed links to license files on PyPI.
 
 ## License
 
