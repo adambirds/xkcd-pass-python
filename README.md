@@ -73,3 +73,7 @@ Note that `xkpassgen` can be used with any word file of the correct format: a fi
 
 * **Version 1.0.0**
     * Initial Release
+
+## License
+
+This project is released under the [GNU GENERAL PUBLIC LICENSE v3](/LICENSE). However the original code from [redacted/XKCD-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](/LICENSE.BSD).
