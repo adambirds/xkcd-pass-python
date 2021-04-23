@@ -1,7 +1,7 @@
 import random
 
 
-def alternating_case(words):
+def case_alternating(words):
     """
     Set EVERY OTHER word to UPPER case.
     """
@@ -10,35 +10,35 @@ def alternating_case(words):
     ]
 
 
-def upper_case(words):
+def case_upper(words):
     """
     Set ALL words to UPPER case.
     """
     return [w.upper() for w in words]
 
 
-def first_upper_case(words):
+def case_first_upper(words):
     """
     Set First character of each word to UPPER case.
     """
     return [w.capitalize() for w in words]
 
 
-def lower_case(words):
+def case_lower(words):
     """
     Set ALL words to LOWER case.
     """
     return [w.lower() for w in words]
 
 
-def capitalize_case(words):
+def case_capitalize(words):
     """
     Set first letter of each words to UPPER case aka Capitalize.
     """
     return [w.capitalize() for w in words]
 
 
-def random_case(words, testing=False):
+def case_random(words, testing=False):
     """
     Set RANDOM words to UPPER case.
     """
