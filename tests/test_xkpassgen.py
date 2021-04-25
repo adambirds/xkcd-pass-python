@@ -5,6 +5,7 @@ import re
 import sys
 import unittest
 import unittest.mock as mock
+import os
 
 
 from src.xkpassgen import xkpassgen
@@ -256,6 +257,65 @@ class TestEmitPasswords(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 119)
 
+class TestValidateOptions(unittest.TestCase):
+    """ Test cases for function `validate_options`. """
+
+    def setUp(self):
+        """ Set up fixtures for this test case. """
+        self.wordlist_small = xkpassgen.generate_wordlist(
+            wordfile='src/xkpassgen/static/test_list',
+            valid_chars='[a-z]')
+
+        self.options_incorrect_length = argparse.Namespace(
+            max_length = 6,
+            min_length = 7,
+            wordfile = "src/xkpassgen/static/test_list"
+        )
+
+        self.options_incorrect_wordfile = argparse.Namespace(
+            max_length = 7,
+            min_length = 7,
+            wordfile = "src/xkpassgen/static/test_list2"
+        )
+
+        self.options_default_wordfile = argparse.Namespace(
+            max_length = 7,
+            min_length = 7,
+            wordfile = None,
+        )
+
+        self.stdout_patcher = mock.patch.object(
+            sys, 'stdout', new_callable=io.StringIO)
+    
+    def test_validate_options_incorrect_length(self):
+        """ Testing validate options incorrect length. """
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.validate_options(
+                options=self.options_incorrect_length
+            )
+        output = mock_stdout.getvalue()
+        self.assertEqual(len(output.strip()), 81)
+    
+    def test_validate_options_incorrect_wordfile(self):
+        """ Testing validate options incorrect wordfile. """
+        with self.assertRaises(SystemExit):
+            with self.stdout_patcher as mock_stdout:
+                xkpassgen.validate_options(
+                    options=self.options_incorrect_wordfile
+                )
+    
+    def test_validate_options_default_wordfile(self):
+        """
+        Testing validate options default_wordfile.
+        """
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.validate_options(
+                options=self.options_default_wordfile,
+                testing=True,
+            )
+        output = mock_stdout.getvalue()
+        self.assertEqual(output.strip(), os.path.abspath("src/xkpassgen/static/eff-long".strip()))
+
 class TestEntropyInformation(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
 
@@ -271,6 +331,6 @@ class TestEntropyInformation(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestEmitPasswords, TestEntropyInformation]
+    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestValidateOptions, TestEmitPasswords, TestEntropyInformation]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
-    unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(suites))
+    unittest.TextTestRunner(verbosity=2, buffer=True).run(unittest.TestSuite(suites))

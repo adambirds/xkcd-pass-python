@@ -32,24 +32,27 @@ if sys.version_info[0] >= 3:
     xrange = range
 
 
-def validate_options(options):
+def validate_options(options, testing=False):
     """
     Given a parsed collection of options, performs various validation checks.
     """
 
     if options.max_length < options.min_length:
-        sys.stderr.write(
-            "Warning: maximum word length less than minimum. "
+        print(
+            "Warning: maximum word length less than minimum.\n"
             "Setting maximum equal to minimum.\n"
         )
         # sys.exit(1)
 
     wordfile = locate_wordfile(wordfile=options.wordfile)
     if not wordfile:
-        sys.stderr.write(
+        print(
             "Could not find a word file, or word file does " "not exist.\n"
         )
         sys.exit(1)
+    
+    if testing == True:
+        sys.stdout.write(wordfile)
 
 
 def locate_wordfile(wordfile=None):
