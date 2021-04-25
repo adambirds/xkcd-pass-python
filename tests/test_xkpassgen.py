@@ -83,15 +83,21 @@ class TestEmitPasswords(unittest.TestCase):
     def setUp(self):
         """ Set up fixtures for this test case. """
         self.wordlist_small = xkpassgen.generate_wordlist(
-            wordfile='tests/test_list.txt',
+            wordfile='src/xkpassgen/static/test_list',
             valid_chars='[a-z]')
+        
+        self.wordlist_small_max_min_length = xkpassgen.generate_wordlist(
+            wordfile='src/xkpassgen/static/test_list',
+            valid_chars='[a-z]',
+            min_length = 7,
+            max_length = 6)
 
         self.options = argparse.Namespace(
             interactive=False,
             numwords=6,
             count=1,
             acrostic=False,
-            delimiter=" ",
+            delimiter="",
             separator=u"\n",
             no_padding_digits=False,
             padding_digits_num=2,
@@ -151,6 +157,17 @@ class TestEmitPasswords(unittest.TestCase):
                 options=self.options)
         output = mock_stdout.getvalue()
         self.assertEqual(any(map(str.isdigit, output)), False)
+    
+    def test_max_length_less_than_min_length(self):
+        """ Should work if max_length is less than min_length by setting max_length to same as min_length. """
+        self.options.numwords = 3
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.emit_passwords(
+                wordlist=self.wordlist_small_max_min_length,
+                options=self.options)
+        output = mock_stdout.getvalue()
+        self.assertEqual(len(output.strip()), 23)
+
 
 
 class TestEntropyInformation(unittest.TestCase):
