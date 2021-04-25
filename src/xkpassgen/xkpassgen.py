@@ -64,16 +64,16 @@ def locate_wordfile(wordfile=None):
         # wordfile can be in static dir or provided as a complete path
         common_word_files.append(os.path.join(static_dir, wordfile))
         common_word_files.append(os.path.expanduser(wordfile))
-
-    common_word_files.extend(
-        [
-            os.path.join(static_dir, DEFAULT_WORDFILE),
-            "/usr/share/cracklib/cracklib-small",
-            "/usr/share/dict/cracklib-small",
-            "/usr/dict/words",
-            "/usr/share/dict/words",
-        ]
-    )
+    else:
+        common_word_files.extend(
+            [
+                os.path.join(static_dir, DEFAULT_WORDFILE),
+                "/usr/share/cracklib/cracklib-small",
+                "/usr/share/dict/cracklib-small",
+                "/usr/dict/words",
+                "/usr/share/dict/words",
+            ]
+        )
 
     for wfile in common_word_files:
         if os.path.isfile(wfile):
