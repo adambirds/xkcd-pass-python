@@ -96,7 +96,6 @@ class TestEmitPasswords(unittest.TestCase):
             interactive=False,
             numwords=6,
             count=1,
-            acrostic=False,
             delimiter="",
             separator=u"\n",
             no_padding_digits=False,
