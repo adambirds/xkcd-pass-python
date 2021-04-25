@@ -239,13 +239,10 @@ def initialize_interactive_run(options):
             sys.stderr.write("Please enter a positive integer\n")
             sys.exit(1)
 
-    if not options.acrostic:
-        n_words_prompt = "Enter number of words (default {0}):\n".format(
-            options.numwords
-        )
-        options.numwords = try_input(n_words_prompt, n_words_validator)
-    else:
-        options.numwords = len(options.acrostic)
+    n_words_prompt = "Enter number of words (default {0}):\n".format(
+        options.numwords
+    )
+    options.numwords = try_input(n_words_prompt, n_words_validator)
 
 
 def emit_passwords(wordlist, options):
