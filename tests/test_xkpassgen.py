@@ -15,6 +15,10 @@ WORDFILE = 'src/xkpassgen/static/eff-long'
 
 
 class XkPassGenTests(unittest.TestCase):
+
+    def shortDescription(self):
+        return None
+
     def setUp(self):
         self.wordlist_full = xkpassgen.generate_wordlist(
             wordfile=WORDFILE,
@@ -25,12 +29,21 @@ class XkPassGenTests(unittest.TestCase):
             valid_chars='[a-z]')
 
     def test_loadwordfile(self):
+        """
+        Test load wordlist is correct.
+        """
         self.assertEqual(len(self.wordlist_full), 5670)
 
     def test_regex(self):
+        """
+        Test regex.
+        """
         self.assertNotIn("__$$$__", self.wordlist_small)
 
     def test_delim(self):
+        """
+        Test delimiter is set correctly.
+        """
         tdelim = "_"
         result = xkpassgen.generate_xkpassword(
             self.wordlist_small,
@@ -38,6 +51,9 @@ class XkPassGenTests(unittest.TestCase):
         self.assertIsNotNone(re.match('([a-zA-z]+(_|)+([0-9])+)+', result))
 
     def test_set_case(self):
+        """
+        Test set_case works correctly.
+        """
         words = "this is only a test".lower().split()
         words_before = set(words)
 
@@ -78,10 +94,17 @@ class XkPassGenTests(unittest.TestCase):
         self.assertIn(observed_random_result_2, (expected_random_result_2_py2, expected_random_result_2_py3))
 
 class TestInteractiveInitialization(unittest.TestCase):
-    """ Test cases for interactive intialization. """
+    """
+    Test cases for interactive intialization.
+    """
+
+    def shortDescription(self):
+        return None
 
     def setUp(self):
-        """ Set up fixtures for this test case. """
+        """
+        Set up fixtures for this test case.
+        """
         self.wordlist_small = xkpassgen.generate_wordlist(
             wordfile='src/xkpassgen/static/test_list',
             valid_chars='[a-z]')
@@ -96,7 +119,9 @@ class TestInteractiveInitialization(unittest.TestCase):
             sys, 'stdout', new_callable=io.StringIO)
     
     def test_interactive_initialization(self):
-        """ Should test interactive intialization. """
+        """
+        Should test interactive intialization.
+        """
         self.options.testtype = "NumWords"
         with self.stdout_patcher as mock_stdout:
             xkpassgen.initialize_interactive_run(
@@ -105,7 +130,9 @@ class TestInteractiveInitialization(unittest.TestCase):
         self.assertEqual(output.strip(), str(2))
     
     def test_interactive_initialization_default_numwords(self):
-        """ Should test interactive intialization. """
+        """
+        Should test interactive intialization.
+        """
         self.options.testtype = "NumWords0"
         with self.stdout_patcher as mock_stdout:
             xkpassgen.initialize_interactive_run(
@@ -114,7 +141,9 @@ class TestInteractiveInitialization(unittest.TestCase):
         self.assertEqual(output.strip(), str(6))
     
     def test_interactive_initialization_error(self):
-        """ Should test interactive intialization. """
+        """
+        Should test interactive intialization.
+        """
         self.options.testtype = "NumWordsError"
         with self.assertRaises(SystemExit):
             with self.stdout_patcher as mock_stdout:
@@ -122,10 +151,17 @@ class TestInteractiveInitialization(unittest.TestCase):
                     options=self.options)
 
 class TestVerboseReports(unittest.TestCase):
-    """ Test cases for function `verbose_reports`. """
+    """
+    Test cases for function `verbose_reports`.
+    """
+
+    def shortDescription(self):
+        return None
 
     def setUp(self):
-        """ Set up fixtures for this test case. """
+        """
+        Set up fixtures for this test case.
+        """
         self.wordlist_small = xkpassgen.generate_wordlist(
             wordfile='src/xkpassgen/static/test_list',
             valid_chars='[a-z]')
@@ -140,7 +176,9 @@ class TestVerboseReports(unittest.TestCase):
     
 
     def test_verbose_output(self):
-        """ Should display verbose reporting. """
+        """
+        Should display verbose reporting.
+        """
         self.options.verbose = True
         with self.stdout_patcher as mock_stdout:
             xkpassgen.verbose_reports(
@@ -155,10 +193,17 @@ assuming truly random word selection.
         self.assertEqual(output.strip(), expected_output)
 
 class TestEmitPasswords(unittest.TestCase):
-    """ Test cases for function `emit_passwords`. """
+    """
+    Test cases for function `emit_passwords`.
+    """
+
+    def shortDescription(self):
+        return None
 
     def setUp(self):
-        """ Set up fixtures for this test case. """
+        """
+        Set up fixtures for this test case.
+        """
         self.wordlist_small = xkpassgen.generate_wordlist(
             wordfile='src/xkpassgen/static/test_list',
             valid_chars='[a-z]')
@@ -201,7 +246,9 @@ class TestEmitPasswords(unittest.TestCase):
             output.count(expected_separator), expected_separator_count)
 
     def test_emits_specified_separator_between_passwords(self):
-        """ Should emit specified separator text between each password. """
+        """
+        Should emit specified separator text between each password.
+        """
         self.options.count = 3
         self.options.separator = u"!@#$%"
         with self.stdout_patcher as mock_stdout:
@@ -215,7 +262,9 @@ class TestEmitPasswords(unittest.TestCase):
             output.count(expected_separator), expected_separator_count)
 
     def test_emits_no_separator_when_specified_separator_empty(self):
-        """ Should emit no separator when empty separator specified. """
+        """
+        Should emit no separator when empty separator specified.
+        """
         self.options.count = 1
         self.options.separator = u""
         with self.stdout_patcher as mock_stdout:
@@ -227,7 +276,9 @@ class TestEmitPasswords(unittest.TestCase):
         self.assertEqual(output.find(unwanted_separator), -1)
     
     def test_emits_no_digits_when_no_padding_digits_is_true(self):
-        """ Should emit no digits when no_padding_digits is true. """
+        """
+        Should emit no digits when no_padding_digits is true.
+        """
         self.options.no_padding_digits = True
         with self.stdout_patcher as mock_stdout:
             xkpassgen.emit_passwords(
@@ -237,7 +288,9 @@ class TestEmitPasswords(unittest.TestCase):
         self.assertEqual(any(map(str.isdigit, output)), False)
     
     def test_max_length_less_than_min_length(self):
-        """ Should work if max_length is less than min_length by setting max_length to same as min_length. """
+        """
+        Should work if max_length is less than min_length by setting max_length to same as min_length.
+        """
         self.options.numwords = 3
         with self.stdout_patcher as mock_stdout:
             xkpassgen.emit_passwords(
@@ -247,7 +300,9 @@ class TestEmitPasswords(unittest.TestCase):
         self.assertEqual(len(output.strip()), 23)
     
     def test_interactive_accept(self):
-        """ Test if interactive accept works. """
+        """
+        Test if interactive accept works.
+        """
         self.options.testing = True
         self.options.interactive = True
         with self.stdout_patcher as mock_stdout:
@@ -258,10 +313,17 @@ class TestEmitPasswords(unittest.TestCase):
         self.assertEqual(len(output.strip()), 119)
 
 class TestValidateOptions(unittest.TestCase):
-    """ Test cases for function `validate_options`. """
+    """
+    Test cases for function `validate_options`.
+    """
+
+    def shortDescription(self):
+        return None
 
     def setUp(self):
-        """ Set up fixtures for this test case. """
+        """
+        Set up fixtures for this test case.
+        """
         self.wordlist_small = xkpassgen.generate_wordlist(
             wordfile='src/xkpassgen/static/test_list',
             valid_chars='[a-z]')
@@ -288,7 +350,9 @@ class TestValidateOptions(unittest.TestCase):
             sys, 'stdout', new_callable=io.StringIO)
     
     def test_validate_options_incorrect_length(self):
-        """ Testing validate options incorrect length. """
+        """
+        Testing validate options incorrect length.
+        """
         with self.stdout_patcher as mock_stdout:
             xkpassgen.validate_options(
                 options=self.options_incorrect_length
@@ -297,7 +361,9 @@ class TestValidateOptions(unittest.TestCase):
         self.assertEqual(len(output.strip()), 81)
     
     def test_validate_options_incorrect_wordfile(self):
-        """ Testing validate options incorrect wordfile. """
+        """
+        Testing validate options incorrect wordfile.
+        """
         with self.assertRaises(SystemExit):
             with self.stdout_patcher as mock_stdout:
                 xkpassgen.validate_options(
@@ -317,7 +383,12 @@ class TestValidateOptions(unittest.TestCase):
         self.assertEqual(output.strip(), os.path.abspath("src/xkpassgen/static/eff-long".strip()))
 
 class TestEntropyInformation(unittest.TestCase):
-    """ Test cases for function `emit_passwords`. """
+    """
+    Test cases for function `emit_passwords`.
+    """
+
+    def shortDescription(self):
+        return None
 
     @staticmethod
     # def run_xkpassgen_process(*args):
