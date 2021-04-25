@@ -76,6 +76,50 @@ class XkPassGenTests(unittest.TestCase):
         self.assertIn(observed_random_result_1, (expected_random_result_1_py2, expected_random_result_1_py3))
         self.assertIn(observed_random_result_2, (expected_random_result_2_py2, expected_random_result_2_py3))
 
+class TestInteractiveInitialization(unittest.TestCase):
+    """ Test cases for interactive intialization. """
+
+    def setUp(self):
+        """ Set up fixtures for this test case. """
+        self.wordlist_small = xkpassgen.generate_wordlist(
+            wordfile='src/xkpassgen/static/test_list',
+            valid_chars='[a-z]')
+
+        self.options = argparse.Namespace(
+            interactive=True,
+            numwords=6,
+            testing=True,
+        )
+
+        self.stdout_patcher = mock.patch.object(
+            sys, 'stdout', new_callable=io.StringIO)
+    
+    def test_interactive_initialization(self):
+        """ Should test interactive intialization. """
+        self.options.testtype = "NumWords"
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.initialize_interactive_run(
+                options=self.options)
+        output = mock_stdout.getvalue()
+        self.assertEqual(output.strip(), str(2))
+    
+    def test_interactive_initialization_default_numwords(self):
+        """ Should test interactive intialization. """
+        self.options.testtype = "NumWords0"
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.initialize_interactive_run(
+                options=self.options)
+        output = mock_stdout.getvalue()
+        self.assertEqual(output.strip(), str(6))
+    
+    def test_interactive_initialization_error(self):
+        """ Should test interactive intialization. """
+        self.options.testtype = "NumWordsError"
+        with self.assertRaises(SystemExit):
+            with self.stdout_patcher as mock_stdout:
+                xkpassgen.initialize_interactive_run(
+                    options=self.options)
+
 class TestVerboseReports(unittest.TestCase):
     """ Test cases for function `verbose_reports`. """
 
@@ -134,6 +178,7 @@ class TestEmitPasswords(unittest.TestCase):
             padding_digits_num=2,
             case='lower',
             verbose=None,
+            testing=False,
         )
 
         self.stdout_patcher = mock.patch.object(
@@ -199,6 +244,17 @@ class TestEmitPasswords(unittest.TestCase):
                 options=self.options)
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 23)
+    
+    def test_interactive_accept(self):
+        """ Test if interactive accept works. """
+        self.options.testing = True
+        self.options.interactive = True
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.emit_passwords(
+                wordlist=self.wordlist_small_max_min_length,
+                options=self.options)
+        output = mock_stdout.getvalue()
+        self.assertEqual(len(output.strip()), 119)
 
 class TestEntropyInformation(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
@@ -215,6 +271,6 @@ class TestEntropyInformation(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    test_cases = [XkPassGenTests, TestVerboseReports, TestEmitPasswords, TestEntropyInformation]
+    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestEmitPasswords, TestEntropyInformation]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(suites))

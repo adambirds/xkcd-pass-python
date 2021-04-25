@@ -161,22 +161,67 @@ def generate_random_padding_numbers(padding_digits_num):
     return random_number_generator().randint(a=min, b=max)
 
 
-def try_input(prompt, validate):
+def try_input(prompt, validate, testing, method):
     """
     Suppress stack trace on user cancel and validate input with supplied
     validate callable.
     """
+    if testing == False:
+        try:
+            answer = raw_input(prompt)
+        except (KeyboardInterrupt, EOFError):
+            # user cancelled
+            print("")
+            sys.exit(0)
 
-    try:
-        answer = raw_input(prompt)
-    except (KeyboardInterrupt, EOFError):
-        # user cancelled
-        print("")
-        sys.exit(0)
+        # validate input
+        return validate(answer)
+    else:
+        if method == "NumWords":
+            answer = 2
+            print(validate(answer))
+        elif method == "NumWords0":
+            answer = ""
+            print(validate(answer))
+        elif method == "NumWordsError":
+            answer = 0
+            print(validate(answer))
+        elif method == "Accept":
+            answer = "y"
+            return(validate(answer))
 
-    # validate input
-    return validate(answer)
+def gen_passwd(wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter):
+        words = choose_words(wordlist, numwords)
+        if not no_padding_digits:
+            padding_numbers = generate_random_padding_numbers(padding_digits_num)
+            return delimiter.join(set_case(words, method=case)) + str(padding_numbers)
 
+        return delimiter.join(set_case(words, method=case))
+
+def interactive_run_accept(
+    wordlist,
+    numwords=3,
+    interactive=False,
+    delimiter="",
+    case="first",
+    no_padding_digits=False,
+    padding_digits_num=2,
+    testing=False
+):
+    # define input validators
+        def accepted_validator(answer):
+            return answer.lower().strip() in ["y", "yes"]
+
+        # generate passwords until the user accepts
+        accepted = False
+
+        while not accepted:
+            passwd = gen_passwd(wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter)
+            print("Generated: " + passwd)
+            print(testing)
+            accepted = try_input("Accept? [yN] ", accepted_validator, testing, "Accept")
+            print("accepted", accepted)
+        return passwd
 
 def generate_xkpassword(
     wordlist,
@@ -186,6 +231,7 @@ def generate_xkpassword(
     case="first",
     no_padding_digits=False,
     padding_digits_num=2,
+    testing=False
 ):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -193,32 +239,22 @@ def generate_xkpassword(
 
     passwd = None
 
-    def gen_passwd():
-        words = choose_words(wordlist, numwords)
-        if not no_padding_digits:
-            padding_numbers = generate_random_padding_numbers(padding_digits_num)
-            return delimiter.join(set_case(words, method=case)) + str(padding_numbers)
-
-        return delimiter.join(set_case(words, method=case))
-
     # useful if driving the logic from other code
     if not interactive:
-        return gen_passwd()
+        return gen_passwd(wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter)
 
     # else, interactive session
     else:
-        # define input validators
-        def accepted_validator(answer):
-            return answer.lower().strip() in ["y", "yes"]
-
-        # generate passwords until the user accepts
-        accepted = False
-
-        while not accepted:
-            passwd = gen_passwd()
-            print("Generated: " + passwd)
-            accepted = try_input("Accept? [yN] ", accepted_validator)
-            print("accepted", accepted)
+        passwd = interactive_run_accept(
+            wordlist,
+            numwords,
+            interactive,
+            delimiter,
+            case,
+            no_padding_digits,
+            padding_digits_num,
+            testing,
+        )
         return passwd
 
 
@@ -242,7 +278,7 @@ def initialize_interactive_run(options):
     n_words_prompt = "Enter number of words (default {0}):\n".format(
         options.numwords
     )
-    options.numwords = try_input(n_words_prompt, n_words_validator)
+    options.numwords = try_input(n_words_prompt, n_words_validator, options.testing, options.testtype)
 
 
 def emit_passwords(wordlist, options):
@@ -258,6 +294,7 @@ def emit_passwords(wordlist, options):
                 case=options.case,
                 no_padding_digits=options.no_padding_digits,
                 padding_digits_num=options.padding_digits_num,
+                testing=options.testing,
             ),
             end=options.separator,
         )
@@ -414,6 +451,7 @@ def main(argv=None):
         parser = XkPassGenArgumentParser(prog=program_name)
 
         options = parser.parse_args(argv[1:])
+        options.testing = False
         validate_options(options)
 
         my_wordlist = generate_wordlist(
@@ -424,6 +462,7 @@ def main(argv=None):
         )
 
         if options.interactive:
+            options.testtype = "NumWords"
             initialize_interactive_run(options)
 
         if options.verbose:
