@@ -141,6 +141,16 @@ class TestEmitPasswords(unittest.TestCase):
         output = mock_stdout.getvalue()
         unwanted_separator = "\n"
         self.assertEqual(output.find(unwanted_separator), -1)
+    
+    def test_emits_no_digits_when_no_padding_digits_is_true(self):
+        """ Should emit no digits when no_padding_digits is true. """
+        self.options.no_padding_digits = True
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.emit_passwords(
+                wordlist=self.wordlist_small,
+                options=self.options)
+        output = mock_stdout.getvalue()
+        self.assertEqual(any(map(str.isdigit, output)), False)
 
 
 class TestEntropyInformation(unittest.TestCase):
