@@ -76,6 +76,38 @@ class XkPassGenTests(unittest.TestCase):
         self.assertIn(observed_random_result_1, (expected_random_result_1_py2, expected_random_result_1_py3))
         self.assertIn(observed_random_result_2, (expected_random_result_2_py2, expected_random_result_2_py3))
 
+class TestVerboseReports(unittest.TestCase):
+    """ Test cases for function `verbose_reports`. """
+
+    def setUp(self):
+        """ Set up fixtures for this test case. """
+        self.wordlist_small = xkpassgen.generate_wordlist(
+            wordfile='src/xkpassgen/static/test_list',
+            valid_chars='[a-z]')
+
+        self.options = argparse.Namespace(
+            numwords=6,
+            verbose=None,
+        )
+
+        self.stdout_patcher = mock.patch.object(
+            sys, 'stdout', new_callable=io.StringIO)
+    
+
+    def test_verbose_output(self):
+        """ Should display verbose reporting. """
+        self.options.verbose = True
+        with self.stdout_patcher as mock_stdout:
+            xkpassgen.verbose_reports(
+                wordlist=self.wordlist_small,
+                options=self.options)
+        output = mock_stdout.getvalue()
+        expected_output = """
+With the current options, your word list contains 6 words.
+A 6 word password from this list will have roughly 15 (2.58 * 6) bits of entropy,
+assuming truly random word selection.
+""".strip()
+        self.assertEqual(output.strip(), expected_output)
 
 class TestEmitPasswords(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
@@ -101,6 +133,7 @@ class TestEmitPasswords(unittest.TestCase):
             no_padding_digits=False,
             padding_digits_num=2,
             case='lower',
+            verbose=None,
         )
 
         self.stdout_patcher = mock.patch.object(
@@ -167,8 +200,6 @@ class TestEmitPasswords(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 23)
 
-
-
 class TestEntropyInformation(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
 
@@ -184,6 +215,6 @@ class TestEntropyInformation(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    test_cases = [XkPassGenTests, TestEmitPasswords, TestEntropyInformation]
+    test_cases = [XkPassGenTests, TestVerboseReports, TestEmitPasswords, TestEntropyInformation]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(suites))
