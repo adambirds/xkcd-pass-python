@@ -1,15 +1,13 @@
-from subprocess import PIPE, Popen
 import argparse
 import io
+import os
 import re
 import sys
 import unittest
 import unittest.mock as mock
-import os
-
+from subprocess import PIPE, Popen
 
 from src.xkpassgen import xkpassgen
-
 
 WORDFILE = "src/xkpassgen/static/eff-long"
 
