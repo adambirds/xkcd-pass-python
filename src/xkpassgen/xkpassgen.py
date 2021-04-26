@@ -164,14 +164,14 @@ def generate_random_padding_numbers(padding_digits_num):
     return random_number_generator().randint(a=min, b=max)
 
 
-def try_input(prompt, validate, testing, method):
+def try_input(prompt, validate, testing=False, method=None):
     """
     Suppress stack trace on user cancel and validate input with supplied
     validate callable.
     """
     if testing == False:
         try:
-            answer = raw_input(prompt)
+            answer = input(prompt)
         except (KeyboardInterrupt, EOFError):
             # user cancelled
             print("")

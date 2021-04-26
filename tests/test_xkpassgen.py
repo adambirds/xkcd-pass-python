@@ -382,6 +382,68 @@ class TestValidateOptions(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(output.strip(), os.path.abspath("src/xkpassgen/static/eff-long".strip()))
 
+
+class TestTryInput(unittest.TestCase):
+    """
+    Test cases for function `try_input`.
+    """
+
+    def shortDescription(self):
+        return None
+
+    def setUp(self):
+        """
+        Set up fixtures for this test case.
+        """
+        self.prompt = "Accept? [yN] "
+
+        self.stdout_patcher = mock.patch.object(
+            sys, 'stdout', new_callable=io.StringIO)
+
+    def test_try_input(self):
+        """
+        Test try input.
+        """
+        def accepted_validator(answer):
+            return answer.lower().strip() in ["y", "yes"]
+        
+        sample_input = io.StringIO()
+        sys.stdin = sample_input
+        sample_input.write("y")
+        sample_input.seek(0)
+
+        output = xkpassgen.try_input(
+            prompt=self.prompt,
+            validate=accepted_validator,
+            testing=False,
+            method=None,
+        )
+        
+        self.assertEqual(output, True)
+    
+    def test_try_input_failure(self):
+        """
+        Test try input failure.
+        """
+        def accepted_validator(answer):
+            return answer.lower().strip() in ["y", "yes"]
+        
+        sample_input = io.StringIO()
+        sys.stdin = sample_input
+        sample_input.write("")
+        sample_input.seek(0)
+
+        with self.assertRaises(SystemExit):
+            output = xkpassgen.try_input(
+                prompt=self.prompt,
+                validate=accepted_validator,
+                testing=False,
+                method=None,
+            )
+    
+    sys.stdin = sys.__stdin__
+        
+
 class TestEntropyInformation(unittest.TestCase):
     """
     Test cases for function `emit_passwords`.
@@ -402,6 +464,6 @@ class TestEntropyInformation(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestValidateOptions, TestEmitPasswords, TestEntropyInformation]
+    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestValidateOptions, TestTryInput, TestEmitPasswords, TestEntropyInformation]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2, buffer=True).run(unittest.TestSuite(suites))
