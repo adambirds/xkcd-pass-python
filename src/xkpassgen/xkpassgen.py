@@ -1,4 +1,4 @@
-3#!/usr/bin/env python
+3  #!/usr/bin/env python
 # encoding: utf-8
 
 import argparse
@@ -10,9 +10,14 @@ import re
 import sys
 from io import open
 
-from xkpassgen.lib.case import (case_alternating, case_capitalize,
-                                case_first_upper, case_lower, case_random,
-                                case_upper)
+from xkpassgen.lib.case import (
+    case_alternating,
+    case_capitalize,
+    case_first_upper,
+    case_lower,
+    case_random,
+    case_upper,
+)
 
 DEFAULT_WORDFILE = "eff-long"
 
@@ -46,11 +51,9 @@ def validate_options(options, testing=False):
 
     wordfile = locate_wordfile(wordfile=options.wordfile)
     if not wordfile:
-        print(
-            "Could not find a word file, or word file does " "not exist.\n"
-        )
+        print("Could not find a word file, or word file does " "not exist.\n")
         sys.exit(1)
-    
+
     if testing == True:
         sys.stdout.write(wordfile)
 
@@ -191,15 +194,19 @@ def try_input(prompt, validate, testing=False, method=None):
             print(validate(answer))
         elif method == "Accept":
             answer = "y"
-            return(validate(answer))
+            return validate(answer)
 
-def gen_passwd(wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter):
-        words = choose_words(wordlist, numwords)
-        if not no_padding_digits:
-            padding_numbers = generate_random_padding_numbers(padding_digits_num)
-            return delimiter.join(set_case(words, method=case)) + str(padding_numbers)
 
-        return delimiter.join(set_case(words, method=case))
+def gen_passwd(
+    wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter
+):
+    words = choose_words(wordlist, numwords)
+    if not no_padding_digits:
+        padding_numbers = generate_random_padding_numbers(padding_digits_num)
+        return delimiter.join(set_case(words, method=case)) + str(padding_numbers)
+
+    return delimiter.join(set_case(words, method=case))
+
 
 def interactive_run_accept(
     wordlist,
@@ -209,22 +216,25 @@ def interactive_run_accept(
     case="first",
     no_padding_digits=False,
     padding_digits_num=2,
-    testing=False
+    testing=False,
 ):
     # define input validators
-        def accepted_validator(answer):
-            return answer.lower().strip() in ["y", "yes"]
+    def accepted_validator(answer):
+        return answer.lower().strip() in ["y", "yes"]
 
-        # generate passwords until the user accepts
-        accepted = False
+    # generate passwords until the user accepts
+    accepted = False
 
-        while not accepted:
-            passwd = gen_passwd(wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter)
-            print("Generated: " + passwd)
-            print(testing)
-            accepted = try_input("Accept? [yN] ", accepted_validator, testing, "Accept")
-            print("accepted", accepted)
-        return passwd
+    while not accepted:
+        passwd = gen_passwd(
+            wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter
+        )
+        print("Generated: " + passwd)
+        print(testing)
+        accepted = try_input("Accept? [yN] ", accepted_validator, testing, "Accept")
+        print("accepted", accepted)
+    return passwd
+
 
 def generate_xkpassword(
     wordlist,
@@ -234,7 +244,7 @@ def generate_xkpassword(
     case="first",
     no_padding_digits=False,
     padding_digits_num=2,
-    testing=False
+    testing=False,
 ):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -244,7 +254,9 @@ def generate_xkpassword(
 
     # useful if driving the logic from other code
     if not interactive:
-        return gen_passwd(wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter)
+        return gen_passwd(
+            wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter
+        )
 
     # else, interactive session
     else:
@@ -278,10 +290,10 @@ def initialize_interactive_run(options):
             sys.stderr.write("Please enter a positive integer\n")
             sys.exit(1)
 
-    n_words_prompt = "Enter number of words (default {0}):\n".format(
-        options.numwords
+    n_words_prompt = "Enter number of words (default {0}):\n".format(options.numwords)
+    options.numwords = try_input(
+        n_words_prompt, n_words_validator, options.testing, options.testtype
     )
-    options.numwords = try_input(n_words_prompt, n_words_validator, options.testing, options.testtype)
 
 
 def emit_passwords(wordlist, options):
@@ -474,9 +486,11 @@ def main():
 
     return exit_status
 
+
 def init():
     if __name__ == "__main__":
         exit_status = main()
         sys.exit(exit_status)
+
 
 init()
