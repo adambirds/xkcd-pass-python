@@ -443,7 +443,83 @@ class TestTryInput(unittest.TestCase):
     
     sys.stdin = sys.__stdin__
         
+class TestMain(unittest.TestCase):
+    """
+    Test cases for function `main`.
+    """
 
+    def shortDescription(self):
+        return None
+
+    def setUp(self):
+        """
+        Set up fixtures for this test case.
+        """
+        self.wordlist_small = xkpassgen.generate_wordlist(
+            wordfile='src/xkpassgen/static/test_list',
+            valid_chars='[a-z]')
+        
+        self.args = [
+            "--min=6",
+            "--max=6",
+            "-n=3",
+        ]
+
+        self.stdout_patcher = mock.patch.object(
+            sys, 'stdout', new_callable=io.StringIO)
+    
+    def test_main(self):
+        """
+        Test main function.
+        """
+        xkpassgen.DEFAULT_WORDFILE = "test_list"
+        with mock.patch.object(sys, 'argv', self.args):
+            with self.stdout_patcher as mock_stdout:
+                xkpassgen.main()
+        output = mock_stdout.getvalue()
+        self.assertEqual(len(output.strip()), 20)
+
+    def test_main_verbose(self):
+        """
+        Test main function.
+        """
+        xkpassgen.DEFAULT_WORDFILE = "test_list"
+        self.args.append("-V")
+        with mock.patch.object(sys, 'argv', self.args):
+            with self.stdout_patcher as mock_stdout:
+                xkpassgen.main()
+        output = mock_stdout.getvalue()
+        self.assertEqual(len(output.strip()), 199)
+    
+    def test_main_interactive(self):
+        """
+        Test main interactive.
+        """
+        
+        sys.stdin = open('src/xkpassgen/static/test_files/stdin_main_interactive','r') 
+
+        xkpassgen.DEFAULT_WORDFILE = "test_list"
+        self.args.append("-i")
+        with mock.patch.object(sys, 'argv', self.args):
+            with self.stdout_patcher as mock_stdout:
+                xkpassgen.main()
+        output = mock_stdout.getvalue()
+        self.assertEqual(len(output.strip()), 132)
+    
+    def test_main_systemexit(self):
+        """
+        Test main interactive error.
+        """
+        expected_output = "Could not find a word file, or word file does not exist.".strip()
+
+        xkpassgen.DEFAULT_WORDFILE = "test_list2"
+        with mock.patch.object(sys, 'argv', self.args):
+            with self.stdout_patcher as mock_stdout:
+                xkpassgen.main()
+        output = mock_stdout.getvalue()
+        self.assertEqual(output.strip(), expected_output)
+
+        sys.stdin = sys.__stdin__
 class TestEntropyInformation(unittest.TestCase):
     """
     Test cases for function `emit_passwords`.
@@ -464,6 +540,6 @@ class TestEntropyInformation(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestValidateOptions, TestTryInput, TestEmitPasswords, TestEntropyInformation]
+    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestValidateOptions, TestTryInput, TestMain, TestEmitPasswords, TestEntropyInformation]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2, buffer=True).run(unittest.TestSuite(suites))
