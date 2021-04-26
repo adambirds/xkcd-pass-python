@@ -474,7 +474,9 @@ def main():
 
     return exit_status
 
+def init():
+    if __name__ == "__main__":
+        exit_status = main()
+        sys.exit(exit_status)
 
-if __name__ == "__main__":
-    exit_status = main()
-    sys.exit(exit_status)
+init()

@@ -520,6 +520,35 @@ class TestMain(unittest.TestCase):
         self.assertEqual(output.strip(), expected_output)
 
         sys.stdin = sys.__stdin__
+
+
+class TestInit(unittest.TestCase):
+    """
+    Test cases for function `init`.
+    """
+    def setUp(self):
+        """
+        Set up fixtures for this test case.
+        """
+
+        self.args = [
+            "--min=6",
+            "--max=6",
+            "-n=3",
+        ]
+
+    def test_init(self):
+        """
+        Test init() function.
+        """
+        with mock.patch.object(sys, 'argv', self.args):
+            with mock.patch.object(xkpassgen, "main", return_value=42):
+                with mock.patch.object(xkpassgen, "__name__", "__main__"):
+                    with mock.patch.object(xkpassgen.sys,'exit') as mock_exit:
+                        xkpassgen.init()
+                        assert mock_exit.call_args[0][0] == 42
+
+
 class TestEntropyInformation(unittest.TestCase):
     """
     Test cases for function `emit_passwords`.
@@ -540,6 +569,6 @@ class TestEntropyInformation(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestValidateOptions, TestTryInput, TestMain, TestEmitPasswords, TestEntropyInformation]
+    test_cases = [XkPassGenTests, TestInteractiveInitialization, TestVerboseReports, TestValidateOptions, TestTryInput, TestInit, TestMain, TestEmitPasswords, TestEntropyInformation]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2, buffer=True).run(unittest.TestSuite(suites))
