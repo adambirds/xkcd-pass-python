@@ -441,19 +441,15 @@ class XkPassGenArgumentParser(argparse.ArgumentParser):
         )
 
 
-def main(argv=None):
+def main():
     """ Mainline code for this program. """
-
-    if argv is None:
-        argv = sys.argv
 
     exit_status = 0
 
     try:
-        program_name = os.path.basename(argv[0])
-        parser = XkPassGenArgumentParser(prog=program_name)
+        parser = XkPassGenArgumentParser()
 
-        options = parser.parse_args(argv[1:])
+        options = parser.parse_args()
         options.testing = False
         validate_options(options)
 
@@ -480,5 +476,5 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    exit_status = main(sys.argv)
+    exit_status = main()
     sys.exit(exit_status)
