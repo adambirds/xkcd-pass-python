@@ -82,6 +82,8 @@ Note that `xkpassgen` can be used with any word file of the correct format: a fi
     * Fix interactive usage.
     * Fix issue where wrong wordfile wasn't being recognised.
     * Add 100% test coverage.
+* **Version 1.0.5**
+    * Fix typo in static import causing wordfile error.
 
 ## License
 
