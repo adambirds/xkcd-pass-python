@@ -1,2 +1,2 @@
-recursive-include src/xkpassgen/lib/*
-rescursive-include src/xkpassgen/static/*
+recursive-include src/xkpassgen/lib/ *
+recursive-include src/xkpassgen/static/ *
