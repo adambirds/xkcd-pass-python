@@ -1,23 +1,23 @@
-# xkcd_pass
+# xkcd-pass
 ![build status](https://github.com/adambirds/xkcd_password-gen/actions/workflows/build.yml/badge.svg)
-[![PyPI version](https://badge.fury.io/py/xkcd_pass.svg)](https://badge.fury.io/py/xkcd_pass)
+[![PyPI version](https://badge.fury.io/py/xkcd-pass.svg)](https://badge.fury.io/py/xkcd_pass)
 [![codecov](https://codecov.io/gh/adambirds/xkcd_password-gen/branch/master/graph/badge.svg?token=4RKK2ABREH)](https://codecov.io/gh/adambirds/xkcd_password-gen)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/xkcd_pass)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/xkcd-pass)
 
 A flexible and scriptable password generator which generates strong passphrases, inspired by XKCD 936
 
 ```
-$ xkcd_pass
+$ xkcd-pass
 > HeadscarfSuddenDumping93
 ```
 
 ![](https://imgs.xkcd.com/comics/password_strength.png)
 
 ## Install
-`xkcd_pass` can easily be installed with the following command:
+`xkcd-pass` can easily be installed with the following command:
 
 ```
-pip install xkcd_pass
+pip install xkcd-pass
 ```
 
 or manually by:
@@ -35,9 +35,9 @@ Contributions welcome and gratefully appreciated!
 Python 3 (Version 3.6 or later).
 
 ## Running `xkcd_pass`
-`xkcd_pass` can be called with no arguments with an output using the default wordfile and settings.
+`xkcd-pass` can be called with no arguments with an output using the default wordfile and settings.
 ```
-$ xkcd_pass
+$ xkcd-pass
 > HeadscarfSuddenDumping93
 ```
 The default settings return a single password made up of 3 words each having its first letter capitalized with two random digits afterwards.
@@ -45,7 +45,7 @@ The default settings return a single password made up of 3 words each having its
 It can also be called with a mixture of multiple arguments for example:
 
 ```
-$ xkcd_pass -d _ -c 5 --min 5 --max 7 --padding-digits-num 4
+$ xkcd-pass -d _ -c 5 --min 5 --max 7 --padding-digits-num 4
 > Mundane_Music_Spleen1837
 > Reuse_Acclaim_Clarify2492
 > Wildly_Contest_Anchor1798
@@ -62,14 +62,14 @@ This will return:
 A full overview of the available options can be accessed by running following command:
 
 ```
-xkcd_pass --help
+xkcd-pass --help
 ```
 
 ## Word Lists
 
 Several word lists are provided with the package. The default, eff-long, was specifically designed by the EFF for [passphrase generation](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases) and is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/). As it was originally intended for use with Diceware ensure that the number of words in your passphrase is at least six when using it. Two shorter variants of that list, eff-short and eff-special, are also included. Please refer to the EFF documentation linked above for more information.
 
-Note that `xkcd_pass` can be used with any word file of the correct format: a file containing one word per line.
+Note that `xkcd-pass` can be used with any word file of the correct format: a file containing one word per line.
 
 ## Changelog
 
@@ -86,6 +86,8 @@ Note that `xkcd_pass` can be used with any word file of the correct format: a fi
     * Fix typo in static import causing wordfile error.
 * **Version 1.0.6**
     * Change package name to `xkcd_pass`.
+* **Version 1.0.7**
+    * Change command-line package to `xkcd-pass`.
 
 ## License
 
