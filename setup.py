@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="xkcd_pass",
+    name="xkcd-pass",
     version="1.0.6",
     author="Adam Birds",
     author_email="adam.birds@adbwebdesigns.co.uk",
@@ -21,7 +21,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
-    entry_points={"console_scripts": ["xkcd_pass=xkcd_pass.xkcd_pass:main"]},
+    entry_points={"console_scripts": ["xkcd-pass=xkcd_pass.xkcd_pass:main"]},
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     include_package_data=True,
