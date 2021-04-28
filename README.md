@@ -84,6 +84,8 @@ Note that `xkcd_pass` can be used with any word file of the correct format: a fi
     * Add 100% test coverage.
 * **Version 1.0.5**
     * Fix typo in static import causing wordfile error.
+* **Version 1.0.6**
+    * Change package name to `xkcd_pass`.
 
 ## License
 

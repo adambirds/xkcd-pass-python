@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="xkcd_pass",  # Replace with your own username
-    version="1.0.5",
+    name="xkcd_pass",
+    version="1.0.6",
     author="Adam Birds",
     author_email="adam.birds@adbwebdesigns.co.uk",
     description="Generate secure multiword passwords/passphrases, inspired by XKCD",
