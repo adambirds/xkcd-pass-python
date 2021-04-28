@@ -1,7 +1,7 @@
 # xkcd-pass
-![build status](https://github.com/adambirds/xkcd_password-gen/actions/workflows/build.yml/badge.svg)
+![build status](https://github.com/adambirds/xkcd-password-gen/actions/workflows/build.yml/badge.svg)
 [![PyPI version](https://badge.fury.io/py/xkcd-pass.svg)](https://badge.fury.io/py/xkcd_pass)
-[![codecov](https://codecov.io/gh/adambirds/xkcd_password-gen/branch/master/graph/badge.svg?token=4RKK2ABREH)](https://codecov.io/gh/adambirds/xkcd_password-gen)
+[![codecov](https://codecov.io/gh/adambirds/xkcd-password-gen/branch/master/graph/badge.svg?token=4RKK2ABREH)](https://codecov.io/gh/adambirds/xkcd-password-gen)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/xkcd-pass)
 
 A flexible and scriptable password generator which generates strong passphrases, inspired by XKCD 936
