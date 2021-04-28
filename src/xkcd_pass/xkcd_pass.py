@@ -10,14 +10,9 @@ import re
 import sys
 from io import open
 
-from xkcd_pass.lib.case import (
-    case_alternating,
-    case_capitalize,
-    case_first_upper,
-    case_lower,
-    case_random,
-    case_upper,
-)
+from xkcd_pass.lib.case import (case_alternating, case_capitalize,
+                                case_first_upper, case_lower, case_random,
+                                case_upper)
 
 DEFAULT_WORDFILE = "eff-long"
 
