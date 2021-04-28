@@ -7,23 +7,23 @@ import unittest
 import unittest.mock as mock
 from subprocess import PIPE, Popen
 
-from src.xkpassgen import xkpassgen
+from src.xkcd_pass import xkcd_pass
 
-WORDFILE = "src/xkpassgen/static/eff-long"
+WORDFILE = "src/xkcd_pass/static/eff-long"
 
 
-class XkPassGenTests(unittest.TestCase):
+class xkcd_passTests(unittest.TestCase):
     def shortDescription(self):
         return None
 
     def setUp(self):
-        self.wordlist_full = xkpassgen.generate_wordlist(
+        self.wordlist_full = xkcd_pass.generate_wordlist(
             wordfile=WORDFILE,
             min_length=5,
             max_length=8,
         )
-        self.wordlist_small = xkpassgen.generate_wordlist(
-            wordfile="src/xkpassgen/static/test_list", valid_chars="[a-z]"
+        self.wordlist_small = xkcd_pass.generate_wordlist(
+            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
         )
 
     def test_loadwordfile(self):
@@ -43,7 +43,7 @@ class XkPassGenTests(unittest.TestCase):
         Test delimiter is set correctly.
         """
         tdelim = "_"
-        result = xkpassgen.generate_xkpassword(self.wordlist_small, delimiter=tdelim)
+        result = xkcd_pass.generate_xkpassword(self.wordlist_small, delimiter=tdelim)
         self.assertIsNotNone(re.match("([a-zA-z]+(_|)+([0-9])+)+", result))
 
     def test_set_case(self):
@@ -55,12 +55,12 @@ class XkPassGenTests(unittest.TestCase):
 
         results = {}
 
-        results["lower"] = xkpassgen.set_case(words, method="lower")
-        results["upper"] = xkpassgen.set_case(words, method="upper")
-        results["alternating"] = xkpassgen.set_case(words, method="alternating")
-        results["random"] = xkpassgen.set_case(words, method="random", testing=True)
-        results["first"] = xkpassgen.set_case(words, method="first")
-        results["capitalize"] = xkpassgen.set_case(words, method="capitalize")
+        results["lower"] = xkcd_pass.set_case(words, method="lower")
+        results["upper"] = xkcd_pass.set_case(words, method="upper")
+        results["alternating"] = xkcd_pass.set_case(words, method="alternating")
+        results["random"] = xkcd_pass.set_case(words, method="random", testing=True)
+        results["first"] = xkcd_pass.set_case(words, method="first")
+        results["capitalize"] = xkcd_pass.set_case(words, method="capitalize")
 
         words_after = set(
             word.lower() for group in list(results.values()) for word in group
@@ -82,7 +82,7 @@ class XkPassGenTests(unittest.TestCase):
 
         words_extra = "this is a test also".lower().split()
         observed_random_result_1 = results["random"]
-        observed_random_result_2 = xkpassgen.set_case(
+        observed_random_result_2 = xkcd_pass.set_case(
             words_extra, method="random", testing=True
         )
 
@@ -108,8 +108,8 @@ class TestInteractiveInitialization(unittest.TestCase):
         """
         Set up fixtures for this test case.
         """
-        self.wordlist_small = xkpassgen.generate_wordlist(
-            wordfile="src/xkpassgen/static/test_list", valid_chars="[a-z]"
+        self.wordlist_small = xkcd_pass.generate_wordlist(
+            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
         )
 
         self.options = argparse.Namespace(
@@ -126,7 +126,7 @@ class TestInteractiveInitialization(unittest.TestCase):
         """
         self.options.testtype = "NumWords"
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.initialize_interactive_run(options=self.options)
+            xkcd_pass.initialize_interactive_run(options=self.options)
         output = mock_stdout.getvalue()
         self.assertEqual(output.strip(), str(2))
 
@@ -136,7 +136,7 @@ class TestInteractiveInitialization(unittest.TestCase):
         """
         self.options.testtype = "NumWords0"
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.initialize_interactive_run(options=self.options)
+            xkcd_pass.initialize_interactive_run(options=self.options)
         output = mock_stdout.getvalue()
         self.assertEqual(output.strip(), str(6))
 
@@ -147,7 +147,7 @@ class TestInteractiveInitialization(unittest.TestCase):
         self.options.testtype = "NumWordsError"
         with self.assertRaises(SystemExit):
             with self.stdout_patcher as mock_stdout:
-                xkpassgen.initialize_interactive_run(options=self.options)
+                xkcd_pass.initialize_interactive_run(options=self.options)
 
 
 class TestVerboseReports(unittest.TestCase):
@@ -162,8 +162,8 @@ class TestVerboseReports(unittest.TestCase):
         """
         Set up fixtures for this test case.
         """
-        self.wordlist_small = xkpassgen.generate_wordlist(
-            wordfile="src/xkpassgen/static/test_list", valid_chars="[a-z]"
+        self.wordlist_small = xkcd_pass.generate_wordlist(
+            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
         )
 
         self.options = argparse.Namespace(
@@ -179,7 +179,7 @@ class TestVerboseReports(unittest.TestCase):
         """
         self.options.verbose = True
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.verbose_reports(
+            xkcd_pass.verbose_reports(
                 wordlist=self.wordlist_small, options=self.options
             )
         output = mock_stdout.getvalue()
@@ -203,12 +203,12 @@ class TestEmitPasswords(unittest.TestCase):
         """
         Set up fixtures for this test case.
         """
-        self.wordlist_small = xkpassgen.generate_wordlist(
-            wordfile="src/xkpassgen/static/test_list", valid_chars="[a-z]"
+        self.wordlist_small = xkcd_pass.generate_wordlist(
+            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
         )
 
-        self.wordlist_small_max_min_length = xkpassgen.generate_wordlist(
-            wordfile="src/xkpassgen/static/test_list",
+        self.wordlist_small_max_min_length = xkcd_pass.generate_wordlist(
+            wordfile="src/xkcd_pass/static/test_list",
             valid_chars="[a-z]",
             min_length=7,
             max_length=6,
@@ -235,7 +235,7 @@ class TestEmitPasswords(unittest.TestCase):
         """
         self.options.count = 6
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.emit_passwords(wordlist=self.wordlist_small, options=self.options)
+            xkcd_pass.emit_passwords(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
         expected_separator = self.options.separator
         expected_separator_count = self.options.count
@@ -248,7 +248,7 @@ class TestEmitPasswords(unittest.TestCase):
         self.options.count = 3
         self.options.separator = u"!@#$%"
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.emit_passwords(wordlist=self.wordlist_small, options=self.options)
+            xkcd_pass.emit_passwords(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
         expected_separator = self.options.separator
         expected_separator_count = self.options.count
@@ -261,7 +261,7 @@ class TestEmitPasswords(unittest.TestCase):
         self.options.count = 1
         self.options.separator = u""
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.emit_passwords(wordlist=self.wordlist_small, options=self.options)
+            xkcd_pass.emit_passwords(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
         unwanted_separator = "\n"
         self.assertEqual(output.find(unwanted_separator), -1)
@@ -272,7 +272,7 @@ class TestEmitPasswords(unittest.TestCase):
         """
         self.options.no_padding_digits = True
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.emit_passwords(wordlist=self.wordlist_small, options=self.options)
+            xkcd_pass.emit_passwords(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
         self.assertEqual(any(map(str.isdigit, output)), False)
 
@@ -282,7 +282,7 @@ class TestEmitPasswords(unittest.TestCase):
         """
         self.options.numwords = 3
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.emit_passwords(
+            xkcd_pass.emit_passwords(
                 wordlist=self.wordlist_small_max_min_length, options=self.options
             )
         output = mock_stdout.getvalue()
@@ -295,7 +295,7 @@ class TestEmitPasswords(unittest.TestCase):
         self.options.testing = True
         self.options.interactive = True
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.emit_passwords(
+            xkcd_pass.emit_passwords(
                 wordlist=self.wordlist_small_max_min_length, options=self.options
             )
         output = mock_stdout.getvalue()
@@ -314,16 +314,16 @@ class TestValidateOptions(unittest.TestCase):
         """
         Set up fixtures for this test case.
         """
-        self.wordlist_small = xkpassgen.generate_wordlist(
-            wordfile="src/xkpassgen/static/test_list", valid_chars="[a-z]"
+        self.wordlist_small = xkcd_pass.generate_wordlist(
+            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
         )
 
         self.options_incorrect_length = argparse.Namespace(
-            max_length=6, min_length=7, wordfile="src/xkpassgen/static/test_list"
+            max_length=6, min_length=7, wordfile="src/xkcd_pass/static/test_list"
         )
 
         self.options_incorrect_wordfile = argparse.Namespace(
-            max_length=7, min_length=7, wordfile="src/xkpassgen/static/test_list2"
+            max_length=7, min_length=7, wordfile="src/xkcd_pass/static/test_list2"
         )
 
         self.options_default_wordfile = argparse.Namespace(
@@ -339,7 +339,7 @@ class TestValidateOptions(unittest.TestCase):
         Testing validate options incorrect length.
         """
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.validate_options(options=self.options_incorrect_length)
+            xkcd_pass.validate_options(options=self.options_incorrect_length)
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 81)
 
@@ -349,20 +349,20 @@ class TestValidateOptions(unittest.TestCase):
         """
         with self.assertRaises(SystemExit):
             with self.stdout_patcher as mock_stdout:
-                xkpassgen.validate_options(options=self.options_incorrect_wordfile)
+                xkcd_pass.validate_options(options=self.options_incorrect_wordfile)
 
     def test_validate_options_default_wordfile(self):
         """
         Testing validate options default_wordfile.
         """
         with self.stdout_patcher as mock_stdout:
-            xkpassgen.validate_options(
+            xkcd_pass.validate_options(
                 options=self.options_default_wordfile,
                 testing=True,
             )
         output = mock_stdout.getvalue()
         self.assertEqual(
-            output.strip(), os.path.abspath("src/xkpassgen/static/eff-long".strip())
+            output.strip(), os.path.abspath("src/xkcd_pass/static/eff-long".strip())
         )
 
 
@@ -395,7 +395,7 @@ class TestTryInput(unittest.TestCase):
         sample_input.write("y")
         sample_input.seek(0)
 
-        output = xkpassgen.try_input(
+        output = xkcd_pass.try_input(
             prompt=self.prompt,
             validate=accepted_validator,
             testing=False,
@@ -418,7 +418,7 @@ class TestTryInput(unittest.TestCase):
         sample_input.seek(0)
 
         with self.assertRaises(SystemExit):
-            output = xkpassgen.try_input(
+            output = xkcd_pass.try_input(
                 prompt=self.prompt,
                 validate=accepted_validator,
                 testing=False,
@@ -440,8 +440,8 @@ class TestMain(unittest.TestCase):
         """
         Set up fixtures for this test case.
         """
-        self.wordlist_small = xkpassgen.generate_wordlist(
-            wordfile="src/xkpassgen/static/test_list", valid_chars="[a-z]"
+        self.wordlist_small = xkcd_pass.generate_wordlist(
+            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
         )
 
         self.args = [
@@ -456,10 +456,10 @@ class TestMain(unittest.TestCase):
         """
         Test main function.
         """
-        xkpassgen.DEFAULT_WORDFILE = "test_list"
+        xkcd_pass.DEFAULT_WORDFILE = "test_list"
         with mock.patch.object(sys, "argv", self.args):
             with self.stdout_patcher as mock_stdout:
-                xkpassgen.main()
+                xkcd_pass.main()
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 20)
 
@@ -467,11 +467,11 @@ class TestMain(unittest.TestCase):
         """
         Test main function.
         """
-        xkpassgen.DEFAULT_WORDFILE = "test_list"
+        xkcd_pass.DEFAULT_WORDFILE = "test_list"
         self.args.append("-V")
         with mock.patch.object(sys, "argv", self.args):
             with self.stdout_patcher as mock_stdout:
-                xkpassgen.main()
+                xkcd_pass.main()
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 199)
 
@@ -480,13 +480,13 @@ class TestMain(unittest.TestCase):
         Test main interactive.
         """
 
-        sys.stdin = open("src/xkpassgen/static/test_files/stdin_main_interactive", "r")
+        sys.stdin = open("src/xkcd_pass/static/test_files/stdin_main_interactive", "r")
 
-        xkpassgen.DEFAULT_WORDFILE = "test_list"
+        xkcd_pass.DEFAULT_WORDFILE = "test_list"
         self.args.append("-i")
         with mock.patch.object(sys, "argv", self.args):
             with self.stdout_patcher as mock_stdout:
-                xkpassgen.main()
+                xkcd_pass.main()
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 132)
 
@@ -498,10 +498,10 @@ class TestMain(unittest.TestCase):
             "Could not find a word file, or word file does not exist.".strip()
         )
 
-        xkpassgen.DEFAULT_WORDFILE = "test_list2"
+        xkcd_pass.DEFAULT_WORDFILE = "test_list2"
         with mock.patch.object(sys, "argv", self.args):
             with self.stdout_patcher as mock_stdout:
-                xkpassgen.main()
+                xkcd_pass.main()
         output = mock_stdout.getvalue()
         self.assertEqual(output.strip(), expected_output)
 
@@ -529,10 +529,10 @@ class TestInit(unittest.TestCase):
         Test init() function.
         """
         with mock.patch.object(sys, "argv", self.args):
-            with mock.patch.object(xkpassgen, "main", return_value=42):
-                with mock.patch.object(xkpassgen, "__name__", "__main__"):
-                    with mock.patch.object(xkpassgen.sys, "exit") as mock_exit:
-                        xkpassgen.init()
+            with mock.patch.object(xkcd_pass, "main", return_value=42):
+                with mock.patch.object(xkcd_pass, "__name__", "__main__"):
+                    with mock.patch.object(xkcd_pass.sys, "exit") as mock_exit:
+                        xkcd_pass.init()
                         assert mock_exit.call_args[0][0] == 42
 
 
@@ -545,19 +545,19 @@ class TestEntropyInformation(unittest.TestCase):
         return None
 
     @staticmethod
-    # def run_xkpassgen_process(*args):
-    #     process = Popen(["xkpassgen", "-V", "-i"], stdout=PIPE, stdin=PIPE)
+    # def run_xkcd_pass_process(*args):
+    #     process = Popen(["xkcd_pass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
     #     return process.communicate('\n'.join(args))[0]
 
     @staticmethod
     def test_entropy_printout_valid_input(self):
-        values = self.run_xkpassgen_process("4", "y")
+        values = self.run_xkcd_pass_process("4", "y")
         self.assertIn("A 4 word password from this list will have roughly 51", values)
 
 
 if __name__ == "__main__":
     test_cases = [
-        XkPassGenTests,
+        xkcd_passTests,
         TestInteractiveInitialization,
         TestVerboseReports,
         TestValidateOptions,

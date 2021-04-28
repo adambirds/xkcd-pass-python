@@ -10,7 +10,7 @@ import re
 import sys
 from io import open
 
-from xkpassgen.lib.case import (case_alternating, case_capitalize,
+from xkcd_pass.lib.case import (case_alternating, case_capitalize,
                                 case_first_upper, case_lower, case_random,
                                 case_upper)
 
@@ -311,11 +311,11 @@ def emit_passwords(wordlist, options):
         count -= 1
 
 
-class XkPassGenArgumentParser(argparse.ArgumentParser):
+class xkcd_passArgumentParser(argparse.ArgumentParser):
     """ Command-line argument parser for this program. """
 
     def __init__(self, *args, **kwargs):
-        super(XkPassGenArgumentParser, self).__init__(*args, **kwargs)
+        super(xkcd_passArgumentParser, self).__init__(*args, **kwargs)
 
         self._add_arguments()
 
@@ -454,7 +454,7 @@ def main():
     exit_status = 0
 
     try:
-        parser = XkPassGenArgumentParser()
+        parser = xkcd_passArgumentParser()
 
         options = parser.parse_args()
         options.testing = False

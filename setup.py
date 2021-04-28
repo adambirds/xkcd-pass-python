@@ -4,16 +4,16 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="xkpassgen",  # Replace with your own username
+    name="xkcd_pass",  # Replace with your own username
     version="1.0.5",
     author="Adam Birds",
     author_email="adam.birds@adbwebdesigns.co.uk",
     description="Generate secure multiword passwords/passphrases, inspired by XKCD",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/adambirds/xkcd-password-gen",
+    url="https://github.com/adambirds/xkcd_password-gen",
     project_urls={
-        "Bug Tracker": "https://github.com/adambirds/xkcd-password-gen/issues",
+        "Bug Tracker": "https://github.com/adambirds/xkcd_password-gen/issues",
     },
     license="LGPLv3",
     classifiers=[
@@ -21,7 +21,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
-    entry_points={"console_scripts": ["xkpassgen=xkpassgen.xkpassgen:main"]},
+    entry_points={"console_scripts": ["xkcd_pass=xkcd_pass.xkcd_pass:main"]},
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     include_package_data=True,

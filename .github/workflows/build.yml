@@ -1,9 +1,9 @@
-name: Build xkpassgen
+name: Build xkcd_pass
 
 on: push
 jobs:
   build-n-publish:
-    name: Build xkpassgen
+    name: Build xkcd_pass
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@master

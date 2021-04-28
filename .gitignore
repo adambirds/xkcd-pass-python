@@ -134,4 +134,4 @@ dmypy.json
 
 # Exclusions
 
-!src/xkpassgen/lib/
+!src/xkcd_pass/lib/
