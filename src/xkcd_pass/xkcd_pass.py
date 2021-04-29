@@ -341,7 +341,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             type=int,
             default=5,
             metavar="MIN_LENGTH",
-            help="Generate passphrases containing at least MIN_LENGTH words.",
+            help="Generate passphrases containing words of at least MIN_LENGTH characters.",
         )
         self.add_argument(
             "--max",
@@ -349,7 +349,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             type=int,
             default=9,
             metavar="MAX_LENGTH",
-            help="Generate passphrases containing at most MAX_LENGTH words.",
+            help="Generate passphrases containing words of at most MAX_LENGTH characters.",
         )
         exclusive_group.add_argument(
             "-n",
