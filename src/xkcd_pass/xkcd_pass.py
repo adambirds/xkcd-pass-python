@@ -205,7 +205,7 @@ def gen_passwd(
 
 def interactive_run_accept(
     wordlist,
-    numwords=3,
+    numwords=4,
     interactive=False,
     delimiter="",
     case="first",
@@ -233,7 +233,7 @@ def interactive_run_accept(
 
 def generate_xkpassword(
     wordlist,
-    numwords=3,
+    numwords=4,
     interactive=False,
     delimiter="",
     case="first",
@@ -356,7 +356,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--numwords",
             dest="numwords",
             type=int,
-            default=3,
+            default=4,
             metavar="NUM_WORDS",
             help="Generate passphrases containing exactly NUM_WORDS words.",
         )
