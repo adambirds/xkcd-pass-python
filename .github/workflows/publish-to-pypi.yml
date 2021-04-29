@@ -1,6 +1,9 @@
-name: Publish xkcd_pass to PyPI
+name: Publish xkcd-pass to PyPI
 
-on: push
+on: 
+  push:
+    branches:
+      - master
 jobs:
   build-n-publish:
     name: Publish xkcd_pass to PyPI
