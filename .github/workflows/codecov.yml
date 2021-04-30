@@ -1,4 +1,4 @@
-name: Uplaod coverage to Codecov
+name: Upload coverage to Codecov
 on: [push]
 
 defaults:
