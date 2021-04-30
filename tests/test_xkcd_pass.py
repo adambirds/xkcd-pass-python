@@ -5,7 +5,6 @@ import re
 import sys
 import unittest
 import unittest.mock as mock
-from subprocess import PIPE, Popen
 
 from src.xkcd_pass import xkcd_pass
 
@@ -524,24 +523,6 @@ class TestInit(unittest.TestCase):
                         assert mock_exit.call_args[0][0] == 42
 
 
-class TestEntropyInformation(unittest.TestCase):
-    """
-    Test cases for function `emit_passwords`.
-    """
-
-    def shortDescription(self) -> None:
-        return None
-
-    @staticmethod
-    def run_xkcd_pass_process(*args: bytes) -> bytes:
-        process = Popen(["xkcd-pass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
-        return process.communicate(b"\n".join(args))[0]
-
-    def test_entropy_printout_valid_input(self) -> None:
-        values = self.run_xkcd_pass_process(b"4", b"y")
-        self.assertIn(b"A 4 word password from this list will have roughly 51", values)
-
-
 if __name__ == "__main__":
     test_cases = [
         xkcd_passTests,
@@ -552,7 +533,6 @@ if __name__ == "__main__":
         TestInit,
         TestMain,
         TestEmitPasswords,
-        TestEntropyInformation,
     ]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2, buffer=True).run(unittest.TestSuite(suites))
