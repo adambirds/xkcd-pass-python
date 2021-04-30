@@ -4,13 +4,28 @@
 [![codecov](https://codecov.io/gh/adambirds/xkcd-password-gen/branch/master/graph/badge.svg?token=4RKK2ABREH)](https://codecov.io/gh/adambirds/xkcd-password-gen)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/xkcd-pass)
 
-A flexible and scriptable password generator which generates strong passphrases, inspired by XKCD 936
+A flexible and scriptable password generator which generates strong passphrases, inspired by [XKCD 936][xkcd].
 
 ```
 $ xkcd-pass
-> HeadscarfSuddenDumping93
+> DenotePetroleumMournfulStoreroom47
 ```
 
+Whilst this password generator is inspired by [XKCD 936][xkcd], its defaults have been configured in a way which gives this tool the most compatability out of the box with the majority of services we use passwords for today. The faults that we have set are:
+* Phrase containing 4 words between 5 and 9 characters (The default wordfile `eff-long` only contains words between 5 and 9 characters).
+* The first letter of each word is capitalized.
+* The passphrase is ended with two random digits.
+
+This allows the password generator to provide passwords by default which will be strong, easy to remember, difficult to brute-force and still pass the usual requirements of at least one upper-case letter, one lower-case letter and at least 1 digit.
+
+Some of the base code that I started with for this project come from [redacted/xkcd_password-generator](https://github.com/redacted/). Whilst that package was great, the reason for taking this project seperately and adapting it is for the below reasons:
+* To neaten up the codebase to make it easier for other contributers to help develop it further.
+* To provide the project with an active maintainer meaning bugs and potential new features can be released more promptly.
+* To neaten up the output so it is much easier to use with our scripts and programs.
+* To provide it with more compatability for more services by adding the random digit generator to the end of the password.
+* To have a thouroughly tested codebase giving users the ability to trust that the package will work as expected.
+
+[xkcd]: https://xkcd.com/936/
 ![](https://imgs.xkcd.com/comics/password_strength.png)
 
 ## Install
@@ -40,7 +55,7 @@ Python 3 (Version 3.6 or later).
 $ xkcd-pass
 > HeadscarfSuddenDumping93
 ```
-The default settings return a single password made up of 3 words each having its first letter capitalized with two random digits afterwards.
+The default settings return a single password made up of 4 words each having its first letter capitalized with two random digits afterwards.
 
 It can also be called with a mixture of multiple arguments for example:
 
