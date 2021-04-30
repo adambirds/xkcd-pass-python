@@ -1,5 +1,10 @@
 name: Uplaod coverage to Codecov
 on: [push]
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
   run:
     runs-on: ${{ matrix.os }}
@@ -20,6 +25,9 @@ jobs:
         pip install pytest
         pip install pytest-cov
         PYTHONPATH=src pytest --cov=./ --cov-report=xml
+    - name: Run linters.
+      run: |
+        ./tools/lint
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:

@@ -1,9 +1,14 @@
 name: Build xkcd_pass
 
 on: push
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  build-n-publish:
-    name: Build xkcd_pass
+  build:
+    name: Test and build xkcd_pass
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@master
@@ -17,6 +22,13 @@ jobs:
         pip install
         build
         --user
+    - name: Run unittests
+      run: |
+        pip install pytest
+        PYTHONPATH=src pytest
+    - name: Run linters.
+      run: |
+        ./tools/lint
     - name: Build a binary wheel and a source tarball
       run: >-
         python -m

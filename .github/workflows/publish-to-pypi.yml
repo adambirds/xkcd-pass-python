@@ -20,6 +20,13 @@ jobs:
         pip install
         build
         --user
+    - name: Run unittests
+      run: |
+        pip install pytest
+        PYTHONPATH=src pytest
+    - name: Run linters.
+      run: |
+        ./tools/lint
     - name: Build a binary wheel and a source tarball
       run: >-
         python -m
