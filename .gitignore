@@ -135,3 +135,4 @@ dmypy.json
 # Exclusions
 
 !src/xkcd_pass/lib/
+!tools/lib

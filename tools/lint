@@ -4,6 +4,7 @@ from __future__ import absolute_import, print_function
 import argparse
 import re
 
+from lib.custom_check import non_py_rules
 from zulint.command import LinterConfig, add_default_linter_arguments
 from zulint.custom_rules import RuleList
 from zulint.linters import run_pyflakes
@@ -90,6 +91,14 @@ def run():
             ],
         )
         failed = trailing_whitespace_rule.check(by_lang, verbose=args.verbose)
+        return 1 if failed else 0
+
+    @linter_config.lint
+    def custom_nonpy() -> int:
+        """Runs custom checks for non-python files (config: tools/lib/custom_check.py)"""
+        failed = False
+        for rule in non_py_rules:
+            failed = failed or rule.check(by_lang, verbose=args.verbose)
         return 1 if failed else 0
 
     @linter_config.lint
