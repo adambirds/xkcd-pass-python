@@ -9,11 +9,16 @@ import random
 import re
 import sys
 from io import open
-from typing import Any, Callable, Dict, List, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
-from xkcd_pass.lib.case import (case_alternating, case_capitalize,
-                                case_first_upper, case_lower, case_random,
-                                case_upper)
+from xkcd_pass.lib.case import (
+    case_alternating,
+    case_capitalize,
+    case_first_upper,
+    case_lower,
+    case_random,
+    case_upper,
+)
 
 DEFAULT_WORDFILE = "eff-long"
 
@@ -33,7 +38,7 @@ if sys.version_info[0] >= 3:
     xrange = range
 
 
-def validate_options(options: argparse.Namespace, testing: bool =False) -> None:
+def validate_options(options: argparse.Namespace, testing: bool = False) -> None:
     """
     Given a parsed collection of options, performs various validation checks.
     """
@@ -54,7 +59,7 @@ def validate_options(options: argparse.Namespace, testing: bool =False) -> None:
         sys.stdout.write(wordfile)
 
 
-def locate_wordfile(wordfile: str =None) -> str:
+def locate_wordfile(wordfile: str = None) -> Optional[str]:
     """
     Locate a wordfile from provided name/path. Return a path to wordfile
     either from static directory, the provided path or use a default.
@@ -76,13 +81,25 @@ def locate_wordfile(wordfile: str =None) -> str:
                 "/usr/share/dict/words",
             ]
         )
+    wfilecheck = False
+    length = len(common_word_files)
+    count = 0
+    while wfilecheck == False:
+        for wfile in common_word_files:
+            count += 1
+            if os.path.isfile(wfile):
+                wfilecheck = True
+                finalwfile = wfile
+            else:
+                if count == length:
+                    wfilecheck = True
 
-    for wfile in common_word_files:
-        if os.path.isfile(wfile):
-            return wfile
+    return finalwfile if "finalwfile" in locals() else None
 
-    assert False
-def set_case(words: List[str], method: str ="lower" , testing: bool =False) -> Union[Dict[str, List[str]],List[str]]:
+
+def set_case(
+    words: List[str], method: str = "lower", testing: bool = False
+) -> Union[Dict[str, List[str]], List[str]]:
     """
     Perform capitalization on some or all of the strings in `words`.
     Default method is "lower".
@@ -102,7 +119,9 @@ def set_case(words: List[str], method: str ="lower" , testing: bool =False) -> U
         return CASE_METHODS[method](words)
 
 
-def generate_wordlist(wordfile: str, min_length: int =5, max_length: int =9, valid_chars: str =".") -> List[str]:
+def generate_wordlist(
+    wordfile: str, min_length: int = 5, max_length: int = 9, valid_chars: str = "."
+) -> List[str]:
     """
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
@@ -111,13 +130,13 @@ def generate_wordlist(wordfile: str, min_length: int =5, max_length: int =9, val
     # deal with inconsistent min and max, erring toward security
     if min_length > max_length:
         max_length = min_length
-    wordfile = locate_wordfile(wordfile)
-
+    actualwordfile = locate_wordfile(wordfile)
+    assert actualwordfile is not None
     words = set()
 
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars, min_length, max_length))
     # read words from file into wordlist
-    with open(wordfile, encoding="utf-8") as wlf:
+    with open(actualwordfile, encoding="utf-8") as wlf:
         for line in wlf:
             thisword = line.strip()
             if regexp.match(thisword) is not None:
@@ -146,7 +165,7 @@ def verbose_reports(wordlist: List[str], options: argparse.Namespace) -> None:
     print("assuming truly random word selection.\n")
 
 
-def choose_words(wordlist: List [str], numwords: int) -> List[str]:
+def choose_words(wordlist: List[str], numwords: int) -> List[str]:
     """
     Choose numwords randomly from wordlist
     """
@@ -163,7 +182,12 @@ def generate_random_padding_numbers(padding_digits_num: int) -> int:
     return random_number_generator().randint(a=min, b=max)
 
 
-def try_input(prompt: str, validate: Callable[[str], Any], testing: bool =False, method: str =None) -> bool:
+def try_input(
+    prompt: str,
+    validate: Callable[[str], Any],
+    testing: bool = False,
+    method: str = None,
+) -> bool:
     """
     Suppress stack trace on user cancel and validate input with supplied
     validate callable.
@@ -181,21 +205,23 @@ def try_input(prompt: str, validate: Callable[[str], Any], testing: bool =False,
     else:
         if method == "NumWords":
             answer = "2"
-            print(validate(answer))
         elif method == "NumWords0":
             answer = ""
-            print(validate(answer))
         elif method == "NumWordsError":
             answer = "0"
-            print(validate(answer))
         elif method == "Accept":
             answer = "y"
-            return validate(answer)
-    assert False
+        print(validate(answer))
+        return validate(answer)
 
 
 def gen_passwd(
-    wordlist: List [str], numwords: int, no_padding_digits: bool, padding_digits_num: int, case: str, delimiter: str
+    wordlist: List[str],
+    numwords: int,
+    no_padding_digits: bool,
+    padding_digits_num: int,
+    case: str,
+    delimiter: str,
 ) -> str:
     words = choose_words(wordlist, numwords)
     if not no_padding_digits:
@@ -207,13 +233,13 @@ def gen_passwd(
 
 def interactive_run_accept(
     wordlist: List[str],
-    numwords: int =4,
-    interactive: bool =False,
-    delimiter: str ="",
-    case: str ="first",
-    no_padding_digits: bool =False,
-    padding_digits_num: int =2,
-    testing: bool =False,
+    numwords: int = 4,
+    interactive: bool = False,
+    delimiter: str = "",
+    case: str = "first",
+    no_padding_digits: bool = False,
+    padding_digits_num: int = 2,
+    testing: bool = False,
 ) -> str:
     # define input validators
     def accepted_validator(answer: str) -> bool:
@@ -228,20 +254,25 @@ def interactive_run_accept(
         )
         print("Generated: " + passwd)
         print(testing)
-        accepted = try_input(prompt="Accept? [yN] ", validate=accepted_validator, testing=testing, method="Accept")
+        accepted = try_input(
+            prompt="Accept? [yN] ",
+            validate=accepted_validator,
+            testing=testing,
+            method="Accept",
+        )
         print("accepted", accepted)
     return passwd
 
 
 def generate_xkpassword(
     wordlist: List[str],
-    numwords: int =4,
-    interactive: bool =False,
-    delimiter: str="",
-    case: str ="first",
-    no_padding_digits: bool =False,
-    padding_digits_num: int =2,
-    testing: bool =False,
+    numwords: int = 4,
+    interactive: bool = False,
+    delimiter: str = "",
+    case: str = "first",
+    no_padding_digits: bool = False,
+    padding_digits_num: int = 2,
+    testing: bool = False,
 ) -> str:
     """
     Generate an XKCD-style password from the words in wordlist.

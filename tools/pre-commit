@@ -14,6 +14,6 @@ if [ ${#changed_files} -eq 0 ]; then
     exit 0
 fi
 
-./tools/lint --skip=gitlint --skip-provision-check "${changed_files[@]}"
+./tools/lint --skip=gitlint "${changed_files[@]}"
 
 exit 0

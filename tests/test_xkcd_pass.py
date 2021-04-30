@@ -62,9 +62,7 @@ class xkcd_passTests(unittest.TestCase):
         results["first"] = xkcd_pass.set_case(words, method="first")
         results["capitalize"] = xkcd_pass.set_case(words, method="capitalize")
 
-        words_after = set(
-            word.lower() for group in list(results.values()) for word in group
-        )
+        words_after = set(word.lower() for group in list(results.values()) for word in group)
 
         # Test that no words have been fundamentally mutated by any of the methods
         self.assertTrue(words_before == words_after)
@@ -82,9 +80,7 @@ class xkcd_passTests(unittest.TestCase):
 
         words_extra = "this is a test also".lower().split()
         observed_random_result_1 = results["random"]
-        observed_random_result_2 = xkcd_pass.set_case(
-            words_extra, method="random", testing=True
-        )
+        observed_random_result_2 = xkcd_pass.set_case(words_extra, method="random", testing=True)
 
         self.assertIn(
             observed_random_result_1,
@@ -146,7 +142,7 @@ class TestInteractiveInitialization(unittest.TestCase):
         """
         self.options.testtype = "NumWordsError"
         with self.assertRaises(SystemExit):
-                xkcd_pass.initialize_interactive_run(options=self.options)
+            xkcd_pass.initialize_interactive_run(options=self.options)
 
 
 class TestVerboseReports(unittest.TestCase):
@@ -178,9 +174,7 @@ class TestVerboseReports(unittest.TestCase):
         """
         self.options.verbose = True
         with self.stdout_patcher as mock_stdout:
-            xkcd_pass.verbose_reports(
-                wordlist=self.wordlist_small, options=self.options
-            )
+            xkcd_pass.verbose_reports(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
         expected_output = """
 With the current options, your word list contains 6 words.
@@ -218,7 +212,7 @@ class TestEmitPasswords(unittest.TestCase):
             numwords=6,
             count=1,
             delimiter="",
-            separator=u"\n",
+            separator="\n",
             no_padding_digits=False,
             padding_digits_num=2,
             case="lower",
@@ -245,7 +239,7 @@ class TestEmitPasswords(unittest.TestCase):
         Should emit specified separator text between each password.
         """
         self.options.count = 3
-        self.options.separator = u"!@#$%"
+        self.options.separator = "!@#$%"
         with self.stdout_patcher as mock_stdout:
             xkcd_pass.emit_passwords(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
@@ -258,7 +252,7 @@ class TestEmitPasswords(unittest.TestCase):
         Should emit no separator when empty separator specified.
         """
         self.options.count = 1
-        self.options.separator = u""
+        self.options.separator = ""
         with self.stdout_patcher as mock_stdout:
             xkcd_pass.emit_passwords(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
@@ -298,7 +292,7 @@ class TestEmitPasswords(unittest.TestCase):
                 wordlist=self.wordlist_small_max_min_length, options=self.options
             )
         output = mock_stdout.getvalue()
-        self.assertEqual(len(output.strip()), 119)
+        self.assertEqual(len(output.strip()), 124)
 
 
 class TestValidateOptions(unittest.TestCase):
@@ -347,7 +341,7 @@ class TestValidateOptions(unittest.TestCase):
         Testing validate options incorrect wordfile.
         """
         with self.assertRaises(SystemExit):
-                xkcd_pass.validate_options(options=self.options_incorrect_wordfile)
+            xkcd_pass.validate_options(options=self.options_incorrect_wordfile)
 
     def test_validate_options_default_wordfile(self) -> None:
         """
@@ -359,9 +353,7 @@ class TestValidateOptions(unittest.TestCase):
                 testing=True,
             )
         output = mock_stdout.getvalue()
-        self.assertEqual(
-            output.strip(), os.path.abspath("src/xkcd_pass/static/eff-long".strip())
-        )
+        self.assertEqual(output.strip(), os.path.abspath("src/xkcd_pass/static/eff-long".strip()))
 
 
 class TestTryInput(unittest.TestCase):
@@ -492,9 +484,7 @@ class TestMain(unittest.TestCase):
         """
         Test main interactive error.
         """
-        expected_output = (
-            "Could not find a word file, or word file does not exist.".strip()
-        )
+        expected_output = "Could not find a word file, or word file does not exist.".strip()
 
         xkcd_pass.DEFAULT_WORDFILE = "test_list2"
         with mock.patch.object(sys, "argv", self.args):
@@ -545,8 +535,7 @@ class TestEntropyInformation(unittest.TestCase):
     @staticmethod
     def run_xkcd_pass_process(*args: bytes) -> bytes:
         process = Popen(["xkcd-pass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
-        return process.communicate(b'\n'.join(args))[0]
-
+        return process.communicate(b"\n".join(args))[0]
 
     def test_entropy_printout_valid_input(self) -> None:
         values = self.run_xkcd_pass_process(b"4", b"y")
@@ -565,8 +554,5 @@ if __name__ == "__main__":
         TestEmitPasswords,
         TestEntropyInformation,
     ]
-    suites = [
-        unittest.TestLoader().loadTestsFromTestCase(test_case)
-        for test_case in test_cases
-    ]
+    suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2, buffer=True).run(unittest.TestSuite(suites))
