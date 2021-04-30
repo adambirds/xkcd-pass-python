@@ -20,10 +20,12 @@ jobs:
       uses: actions/setup-python@master
       with:
         python-version: 3.7
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v2
+      with:
+        path: "requirements/dev.txt"
     - name: Generate coverage report
       run: |
-        pip install pytest
-        pip install pytest-cov
         PYTHONPATH=src pytest --cov=./ --cov-report=xml
     - name: Run linters.
       run: |
