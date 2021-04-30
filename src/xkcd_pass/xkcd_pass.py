@@ -325,7 +325,7 @@ def initialize_interactive_run(options: argparse.Namespace) -> None:
 
 
 def emit_passwords(wordlist: List[str], options: argparse.Namespace) -> None:
-    """ Generate the specified number of passwords and output them. """
+    """Generate the specified number of passwords and output them."""
     count = options.count
     while count > 0:
         print(
@@ -345,7 +345,7 @@ def emit_passwords(wordlist: List[str], options: argparse.Namespace) -> None:
 
 
 class xkcd_passArgumentParser(argparse.ArgumentParser):
-    """ Command-line argument parser for this program. """
+    """Command-line argument parser for this program."""
 
     def __init__(self: Any, *args: Any, **kwargs: Any):
         super(xkcd_passArgumentParser, self).__init__(*args, **kwargs)
@@ -353,7 +353,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
         self._add_arguments()
 
     def _add_arguments(self) -> None:
-        """ Add the arguments needed for this program. """
+        """Add the arguments needed for this program."""
         exclusive_group = self.add_mutually_exclusive_group()
         self.add_argument(
             "-w",
@@ -482,7 +482,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
 
 
 def main() -> int:
-    """ Mainline code for this program. """
+    """Mainline code for this program."""
 
     exit_status = 0
 
