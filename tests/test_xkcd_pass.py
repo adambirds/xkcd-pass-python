@@ -13,10 +13,10 @@ WORDFILE = "src/xkcd_pass/static/eff-long"
 
 
 class xkcd_passTests(unittest.TestCase):
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.wordlist_full = xkcd_pass.generate_wordlist(
             wordfile=WORDFILE,
             min_length=5,
@@ -26,19 +26,19 @@ class xkcd_passTests(unittest.TestCase):
             wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
         )
 
-    def test_loadwordfile(self):
+    def test_loadwordfile(self) -> None:
         """
         Test load wordlist is correct.
         """
         self.assertEqual(len(self.wordlist_full), 5670)
 
-    def test_regex(self):
+    def test_regex(self) -> None:
         """
         Test regex.
         """
         self.assertNotIn("__$$$__", self.wordlist_small)
 
-    def test_delim(self):
+    def test_delim(self) -> None:
         """
         Test delimiter is set correctly.
         """
@@ -46,7 +46,7 @@ class xkcd_passTests(unittest.TestCase):
         result = xkcd_pass.generate_xkpassword(self.wordlist_small, delimiter=tdelim)
         self.assertIsNotNone(re.match("([a-zA-z]+(_|)+([0-9])+)+", result))
 
-    def test_set_case(self):
+    def test_set_case(self) -> None:
         """
         Test set_case works correctly.
         """
@@ -101,10 +101,10 @@ class TestInteractiveInitialization(unittest.TestCase):
     Test cases for interactive intialization.
     """
 
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up fixtures for this test case.
         """
@@ -120,7 +120,7 @@ class TestInteractiveInitialization(unittest.TestCase):
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
 
-    def test_interactive_initialization(self):
+    def test_interactive_initialization(self) -> None:
         """
         Should test interactive intialization.
         """
@@ -130,7 +130,7 @@ class TestInteractiveInitialization(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(output.strip(), str(2))
 
-    def test_interactive_initialization_default_numwords(self):
+    def test_interactive_initialization_default_numwords(self) -> None:
         """
         Should test interactive intialization.
         """
@@ -140,13 +140,12 @@ class TestInteractiveInitialization(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(output.strip(), str(6))
 
-    def test_interactive_initialization_error(self):
+    def test_interactive_initialization_error(self) -> None:
         """
         Should test interactive intialization.
         """
         self.options.testtype = "NumWordsError"
         with self.assertRaises(SystemExit):
-            with self.stdout_patcher as mock_stdout:
                 xkcd_pass.initialize_interactive_run(options=self.options)
 
 
@@ -155,10 +154,10 @@ class TestVerboseReports(unittest.TestCase):
     Test cases for function `verbose_reports`.
     """
 
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up fixtures for this test case.
         """
@@ -173,7 +172,7 @@ class TestVerboseReports(unittest.TestCase):
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
 
-    def test_verbose_output(self):
+    def test_verbose_output(self) -> None:
         """
         Should display verbose reporting.
         """
@@ -196,10 +195,10 @@ class TestEmitPasswords(unittest.TestCase):
     Test cases for function `emit_passwords`.
     """
 
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up fixtures for this test case.
         """
@@ -241,7 +240,7 @@ class TestEmitPasswords(unittest.TestCase):
         expected_separator_count = self.options.count
         self.assertEqual(output.count(expected_separator), expected_separator_count)
 
-    def test_emits_specified_separator_between_passwords(self):
+    def test_emits_specified_separator_between_passwords(self) -> None:
         """
         Should emit specified separator text between each password.
         """
@@ -254,7 +253,7 @@ class TestEmitPasswords(unittest.TestCase):
         expected_separator_count = self.options.count
         self.assertEqual(output.count(expected_separator), expected_separator_count)
 
-    def test_emits_no_separator_when_specified_separator_empty(self):
+    def test_emits_no_separator_when_specified_separator_empty(self) -> None:
         """
         Should emit no separator when empty separator specified.
         """
@@ -266,7 +265,7 @@ class TestEmitPasswords(unittest.TestCase):
         unwanted_separator = "\n"
         self.assertEqual(output.find(unwanted_separator), -1)
 
-    def test_emits_no_digits_when_no_padding_digits_is_true(self):
+    def test_emits_no_digits_when_no_padding_digits_is_true(self) -> None:
         """
         Should emit no digits when no_padding_digits is true.
         """
@@ -276,7 +275,7 @@ class TestEmitPasswords(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(any(map(str.isdigit, output)), False)
 
-    def test_max_length_less_than_min_length(self):
+    def test_max_length_less_than_min_length(self) -> None:
         """
         Should work if max_length is less than min_length by setting max_length to same as min_length.
         """
@@ -288,7 +287,7 @@ class TestEmitPasswords(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 23)
 
-    def test_interactive_accept(self):
+    def test_interactive_accept(self) -> None:
         """
         Test if interactive accept works.
         """
@@ -307,10 +306,10 @@ class TestValidateOptions(unittest.TestCase):
     Test cases for function `validate_options`.
     """
 
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up fixtures for this test case.
         """
@@ -334,7 +333,7 @@ class TestValidateOptions(unittest.TestCase):
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
 
-    def test_validate_options_incorrect_length(self):
+    def test_validate_options_incorrect_length(self) -> None:
         """
         Testing validate options incorrect length.
         """
@@ -343,15 +342,14 @@ class TestValidateOptions(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 81)
 
-    def test_validate_options_incorrect_wordfile(self):
+    def test_validate_options_incorrect_wordfile(self) -> None:
         """
         Testing validate options incorrect wordfile.
         """
         with self.assertRaises(SystemExit):
-            with self.stdout_patcher as mock_stdout:
                 xkcd_pass.validate_options(options=self.options_incorrect_wordfile)
 
-    def test_validate_options_default_wordfile(self):
+    def test_validate_options_default_wordfile(self) -> None:
         """
         Testing validate options default_wordfile.
         """
@@ -371,10 +369,10 @@ class TestTryInput(unittest.TestCase):
     Test cases for function `try_input`.
     """
 
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up fixtures for this test case.
         """
@@ -382,12 +380,12 @@ class TestTryInput(unittest.TestCase):
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
 
-    def test_try_input(self):
+    def test_try_input(self) -> None:
         """
         Test try input.
         """
 
-        def accepted_validator(answer):
+        def accepted_validator(answer: str) -> bool:
             return answer.lower().strip() in ["y", "yes"]
 
         sample_input = io.StringIO()
@@ -404,12 +402,12 @@ class TestTryInput(unittest.TestCase):
 
         self.assertEqual(output, True)
 
-    def test_try_input_failure(self):
+    def test_try_input_failure(self) -> None:
         """
         Test try input failure.
         """
 
-        def accepted_validator(answer):
+        def accepted_validator(answer: str) -> bool:
             return answer.lower().strip() in ["y", "yes"]
 
         sample_input = io.StringIO()
@@ -418,7 +416,7 @@ class TestTryInput(unittest.TestCase):
         sample_input.seek(0)
 
         with self.assertRaises(SystemExit):
-            output = xkcd_pass.try_input(
+            xkcd_pass.try_input(
                 prompt=self.prompt,
                 validate=accepted_validator,
                 testing=False,
@@ -433,10 +431,10 @@ class TestMain(unittest.TestCase):
     Test cases for function `main`.
     """
 
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up fixtures for this test case.
         """
@@ -452,7 +450,7 @@ class TestMain(unittest.TestCase):
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
 
-    def test_main(self):
+    def test_main(self) -> None:
         """
         Test main function.
         """
@@ -463,7 +461,7 @@ class TestMain(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 20)
 
-    def test_main_verbose(self):
+    def test_main_verbose(self) -> None:
         """
         Test main function.
         """
@@ -475,7 +473,7 @@ class TestMain(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 199)
 
-    def test_main_interactive(self):
+    def test_main_interactive(self) -> None:
         """
         Test main interactive.
         """
@@ -490,7 +488,7 @@ class TestMain(unittest.TestCase):
         output = mock_stdout.getvalue()
         self.assertEqual(len(output.strip()), 132)
 
-    def test_main_systemexit(self):
+    def test_main_systemexit(self) -> None:
         """
         Test main interactive error.
         """
@@ -513,7 +511,7 @@ class TestInit(unittest.TestCase):
     Test cases for function `init`.
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up fixtures for this test case.
         """
@@ -524,7 +522,7 @@ class TestInit(unittest.TestCase):
             "-n=3",
         ]
 
-    def test_init(self):
+    def test_init(self) -> None:
         """
         Test init() function.
         """
@@ -541,18 +539,18 @@ class TestEntropyInformation(unittest.TestCase):
     Test cases for function `emit_passwords`.
     """
 
-    def shortDescription(self):
+    def shortDescription(self) -> None:
         return None
 
     @staticmethod
-    # def run_xkcd_pass_process(*args):
-    #     process = Popen(["xkcd_pass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
-    #     return process.communicate('\n'.join(args))[0]
+    def run_xkcd_pass_process(*args: bytes) -> bytes:
+        process = Popen(["xkcd-pass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
+        return process.communicate(b'\n'.join(args))[0]
 
-    @staticmethod
-    def test_entropy_printout_valid_input(self):
-        values = self.run_xkcd_pass_process("4", "y")
-        self.assertIn("A 4 word password from this list will have roughly 51", values)
+
+    def test_entropy_printout_valid_input(self) -> None:
+        values = self.run_xkcd_pass_process(b"4", b"y")
+        self.assertIn(b"A 4 word password from this list will have roughly 51", values)
 
 
 if __name__ == "__main__":

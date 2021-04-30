@@ -9,6 +9,7 @@ import random
 import re
 import sys
 from io import open
+from typing import Any, Callable, Dict, List, Union
 
 from xkcd_pass.lib.case import (case_alternating, case_capitalize,
                                 case_first_upper, case_lower, case_random,
@@ -16,7 +17,7 @@ from xkcd_pass.lib.case import (case_alternating, case_capitalize,
 
 DEFAULT_WORDFILE = "eff-long"
 
-CASE_METHODS = {
+CASE_METHODS: Dict[str, Callable[[List[str]], List[str]]] = {
     "alternating": case_alternating,
     "upper": case_upper,
     "lower": case_lower,
@@ -32,7 +33,7 @@ if sys.version_info[0] >= 3:
     xrange = range
 
 
-def validate_options(options, testing=False):
+def validate_options(options: argparse.Namespace, testing: bool =False) -> None:
     """
     Given a parsed collection of options, performs various validation checks.
     """
@@ -53,7 +54,7 @@ def validate_options(options, testing=False):
         sys.stdout.write(wordfile)
 
 
-def locate_wordfile(wordfile=None):
+def locate_wordfile(wordfile: str =None) -> str:
     """
     Locate a wordfile from provided name/path. Return a path to wordfile
     either from static directory, the provided path or use a default.
@@ -80,8 +81,8 @@ def locate_wordfile(wordfile=None):
         if os.path.isfile(wfile):
             return wfile
 
-
-def set_case(words, method="lower", testing=False):
+    assert False
+def set_case(words: List[str], method: str ="lower" , testing: bool =False) -> Union[Dict[str, List[str]],List[str]]:
     """
     Perform capitalization on some or all of the strings in `words`.
     Default method is "lower".
@@ -101,7 +102,7 @@ def set_case(words, method="lower", testing=False):
         return CASE_METHODS[method](words)
 
 
-def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars="."):
+def generate_wordlist(wordfile: str, min_length: int =5, max_length: int =9, valid_chars: str =".") -> List[str]:
     """
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
@@ -125,7 +126,7 @@ def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars="."
     return list(words)  # deduplicate, just in case
 
 
-def verbose_reports(wordlist, options):
+def verbose_reports(wordlist: List[str], options: argparse.Namespace) -> None:
     """
     Report entropy metrics based on word list and requested password size"
     """
@@ -145,7 +146,7 @@ def verbose_reports(wordlist, options):
     print("assuming truly random word selection.\n")
 
 
-def choose_words(wordlist, numwords):
+def choose_words(wordlist: List [str], numwords: int) -> List[str]:
     """
     Choose numwords randomly from wordlist
     """
@@ -153,7 +154,7 @@ def choose_words(wordlist, numwords):
     return [random_number_generator().choice(wordlist) for i in xrange(numwords)]
 
 
-def generate_random_padding_numbers(padding_digits_num):
+def generate_random_padding_numbers(padding_digits_num: int) -> int:
     """
     Get random numbers to append to passphrase
     """
@@ -162,7 +163,7 @@ def generate_random_padding_numbers(padding_digits_num):
     return random_number_generator().randint(a=min, b=max)
 
 
-def try_input(prompt, validate, testing=False, method=None):
+def try_input(prompt: str, validate: Callable[[str], Any], testing: bool =False, method: str =None) -> bool:
     """
     Suppress stack trace on user cancel and validate input with supplied
     validate callable.
@@ -179,22 +180,23 @@ def try_input(prompt, validate, testing=False, method=None):
         return validate(answer)
     else:
         if method == "NumWords":
-            answer = 2
+            answer = "2"
             print(validate(answer))
         elif method == "NumWords0":
             answer = ""
             print(validate(answer))
         elif method == "NumWordsError":
-            answer = 0
+            answer = "0"
             print(validate(answer))
         elif method == "Accept":
             answer = "y"
             return validate(answer)
+    assert False
 
 
 def gen_passwd(
-    wordlist, numwords, no_padding_digits, padding_digits_num, case, delimiter
-):
+    wordlist: List [str], numwords: int, no_padding_digits: bool, padding_digits_num: int, case: str, delimiter: str
+) -> str:
     words = choose_words(wordlist, numwords)
     if not no_padding_digits:
         padding_numbers = generate_random_padding_numbers(padding_digits_num)
@@ -204,17 +206,17 @@ def gen_passwd(
 
 
 def interactive_run_accept(
-    wordlist,
-    numwords=4,
-    interactive=False,
-    delimiter="",
-    case="first",
-    no_padding_digits=False,
-    padding_digits_num=2,
-    testing=False,
-):
+    wordlist: List[str],
+    numwords: int =4,
+    interactive: bool =False,
+    delimiter: str ="",
+    case: str ="first",
+    no_padding_digits: bool =False,
+    padding_digits_num: int =2,
+    testing: bool =False,
+) -> str:
     # define input validators
-    def accepted_validator(answer):
+    def accepted_validator(answer: str) -> bool:
         return answer.lower().strip() in ["y", "yes"]
 
     # generate passwords until the user accepts
@@ -226,21 +228,21 @@ def interactive_run_accept(
         )
         print("Generated: " + passwd)
         print(testing)
-        accepted = try_input("Accept? [yN] ", accepted_validator, testing, "Accept")
+        accepted = try_input(prompt="Accept? [yN] ", validate=accepted_validator, testing=testing, method="Accept")
         print("accepted", accepted)
     return passwd
 
 
 def generate_xkpassword(
-    wordlist,
-    numwords=4,
-    interactive=False,
-    delimiter="",
-    case="first",
-    no_padding_digits=False,
-    padding_digits_num=2,
-    testing=False,
-):
+    wordlist: List[str],
+    numwords: int =4,
+    interactive: bool =False,
+    delimiter: str="",
+    case: str ="first",
+    no_padding_digits: bool =False,
+    padding_digits_num: int =2,
+    testing: bool =False,
+) -> str:
     """
     Generate an XKCD-style password from the words in wordlist.
     """
@@ -268,8 +270,8 @@ def generate_xkpassword(
         return passwd
 
 
-def initialize_interactive_run(options):
-    def n_words_validator(answer):
+def initialize_interactive_run(options: argparse.Namespace) -> None:
+    def n_words_validator(answer: Union[str, int]) -> int:
         """
         Validate custom number of words input
         """
@@ -291,7 +293,7 @@ def initialize_interactive_run(options):
     )
 
 
-def emit_passwords(wordlist, options):
+def emit_passwords(wordlist: List[str], options: argparse.Namespace) -> None:
     """ Generate the specified number of passwords and output them. """
     count = options.count
     while count > 0:
@@ -314,12 +316,12 @@ def emit_passwords(wordlist, options):
 class xkcd_passArgumentParser(argparse.ArgumentParser):
     """ Command-line argument parser for this program. """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self: Any, *args: Any, **kwargs: Any):
         super(xkcd_passArgumentParser, self).__init__(*args, **kwargs)
 
         self._add_arguments()
 
-    def _add_arguments(self):
+    def _add_arguments(self) -> None:
         """ Add the arguments needed for this program. """
         exclusive_group = self.add_mutually_exclusive_group()
         self.add_argument(
@@ -448,7 +450,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
         )
 
 
-def main():
+def main() -> int:
     """ Mainline code for this program. """
 
     exit_status = 0
@@ -482,7 +484,7 @@ def main():
     return exit_status
 
 
-def init():
+def init() -> None:
     if __name__ == "__main__":
         exit_status = main()
         sys.exit(exit_status)
