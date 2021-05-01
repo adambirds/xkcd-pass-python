@@ -41,7 +41,6 @@ markdown_rules = RuleList(
         },
         {
             "pattern": r"\][(][^#h]",
-            "include_only": {"README.md"},
             "description": "Use absolute links from docs served by GitHub",
         },
     ],

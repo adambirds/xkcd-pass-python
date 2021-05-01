@@ -129,4 +129,9 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
 
 ## License
 
-This project is released under the [GNU GENERAL PUBLIC LICENSE v3](https://github.com/adambirds/xkcd_password-gen/blob/master/LICENSE). However the original code from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](https://github.com/adambirds/xkcd_password-gen/blob/master/LICENSE.BSD).
+This project is released under the [GNU GENERAL PUBLIC LICENSE v3](https://github.com/adambirds/xkcd-password-gen/blob/master/LICENSE). However the original code from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](https://github.com/adambirds/xkcd-password-gen/blob/master/LICENSE.BSD).
+
+## Contributing
+
+Anybody is welcome to contribute to this project. I just ask that you check out our contributing guidelines
+[here](https://github.com/adambirds/xkcd-password-gen/blob/master/docs/contributing/contributing.md) first.
