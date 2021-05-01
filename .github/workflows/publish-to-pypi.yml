@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  create:
+    tags:
+      - v*
 jobs:
   build-n-publish:
     name: Publish xkcd_pass to PyPI
