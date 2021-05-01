@@ -26,7 +26,7 @@ def run():
 
     # Linters will be run on these file types.
     # eg: file_types = ['py', 'html', 'css', 'js']
-    file_types = ["py"]
+    file_types = ["py", "sh", "md", "yaml"]
 
     EXCLUDED_FILES = [
         # No linters will be run on files in this list.
@@ -74,6 +74,21 @@ def run():
         ["json", "yaml", "yml"],
         fix_arg=["--write"],
         description="Formats Json, YAML",
+    )
+
+    linter_config.external_linter(
+        "shellcheck",
+        ["shellcheck", "-x", "-P", "SCRIPTDIR"],
+        ["sh"],
+        description="Standard shell script linter",
+    )
+    linter_config.external_linter(
+        "shfmt",
+        ["shfmt"],
+        ["sh"],
+        check_arg="-d",
+        fix_arg="-w",
+        description="Formats shell scripts",
     )
 
     @linter_config.lint

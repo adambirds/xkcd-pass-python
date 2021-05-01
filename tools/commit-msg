@@ -7,12 +7,12 @@
 
 # Do not invoke gitlint if commit message is empty
 if grep -q '^[^#]' "$1"; then
-    lint_cmd="tools/lint --only=gitlint"
-    if
-        ! eval "$lint_cmd" <"$1"
-    then
-        echo "WARNING: Your commit message does not match xkcd-pass' style guide."
-    fi
+	lint_cmd="tools/lint --only=gitlint"
+	if
+		! eval "$lint_cmd" <"$1"
+	then
+		echo "WARNING: Your commit message does not match xkcd-pass' style guide."
+	fi
 fi
 
 exit 0
