@@ -9,7 +9,7 @@ on:
       - v*
 jobs:
   build-n-publish:
-    name: Publish xkcd_pass to PyPI
+    name: Publish xkcd-pass to PyPI
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@master
