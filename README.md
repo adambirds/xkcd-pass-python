@@ -11,19 +11,19 @@ $ xkcd-pass
 > DenotePetroleumMournfulStoreroom47
 ```
 
-Whilst this password generator is inspired by [XKCD 936][xkcd], its defaults have been configured in a way which gives this tool the most compatability out of the box with the majority of services we use passwords for today. The faults that we have set are:
+Whilst this password generator is inspired by [XKCD 936][xkcd], its defaults have been configured in a way which gives this tool the most compatibility out of the box with the majority of services we use passwords for today. The faults that we have set are:
 * Phrase containing 4 words between 5 and 9 characters (The default wordfile `eff-long` only contains words between 5 and 9 characters).
 * The first letter of each word is capitalized.
 * The passphrase is ended with two random digits.
 
 This allows the password generator to provide passwords by default which will be strong, easy to remember, difficult to brute-force and still pass the usual requirements of at least one upper-case letter, one lower-case letter and at least 1 digit.
 
-Some of the base code that I started with for this project come from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator). Whilst that package was great, the reason for taking this project seperately and adapting it is for the below reasons:
-* To neaten up the codebase to make it easier for other contributers to help develop it further.
+Some of the base code that I started with for this project come from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator). Whilst that package was great, the reason for taking this project separately and adapting it is for the below reasons:
+* To neaten up the codebase to make it easier for other contributors to help develop it further.
 * To provide the project with an active maintainer meaning bugs and potential new features can be released more promptly.
 * To neaten up the output so it is much easier to use with our scripts and programs.
-* To provide it with more compatability for more services by adding the random digit generator to the end of the password.
-* To have a thouroughly tested codebase giving users the ability to trust that the package will work as expected.
+* To provide it with more compatibility for more services by adding the random digit generator to the end of the password.
+* To have a thoroughly tested codebase giving users the ability to trust that the package will work as expected.
 
 [xkcd]: https://xkcd.com/936/
 ![](https://imgs.xkcd.com/comics/password_strength.png)
@@ -108,7 +108,7 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
     * Fixed links to license files on PyPI.
 * **Version 1.0.2**
     * Fix interactive usage.
-    * Fix issue where wrong wordfile wasn't being recognised.
+    * Fix issue where wrong wordfile wasn't being recognized.
     * Add 100% test coverage.
 * **Version 1.0.5**
     * Fix typo in static import causing wordfile error.
