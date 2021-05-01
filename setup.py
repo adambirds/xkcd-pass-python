@@ -12,9 +12,9 @@ setuptools.setup(
     description="Generate secure multiword passwords/passphrases, inspired by XKCD",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/adambirds/xkcd_password-gen",
+    url="https://github.com/adambirds/xkcd-password-gen",
     project_urls={
-        "Bug Tracker": "https://github.com/adambirds/xkcd_password-gen/issues",
+        "Bug Tracker": "https://github.com/adambirds/xkcd-password-gen/issues",
     },
     license="LGPLv3",
     classifiers=[
