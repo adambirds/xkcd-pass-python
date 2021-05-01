@@ -18,7 +18,7 @@ Whilst this password generator is inspired by [XKCD 936][xkcd], its defaults hav
 
 This allows the password generator to provide passwords by default which will be strong, easy to remember, difficult to brute-force and still pass the usual requirements of at least one upper-case letter, one lower-case letter and at least 1 digit.
 
-Some of the base code that I started with for this project come from [redacted/xkcd_password-generator](https://github.com/redacted/). Whilst that package was great, the reason for taking this project seperately and adapting it is for the below reasons:
+Some of the base code that I started with for this project come from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator). Whilst that package was great, the reason for taking this project seperately and adapting it is for the below reasons:
 * To neaten up the codebase to make it easier for other contributers to help develop it further.
 * To provide the project with an active maintainer meaning bugs and potential new features can be released more promptly.
 * To neaten up the output so it is much easier to use with our scripts and programs.
@@ -106,4 +106,4 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
 
 ## License
 
-This project is released under the [GNU GENERAL PUBLIC LICENSE v3](https://github.com/adambirds/xkcd_password-gen/blob/master/LICENSE). However the original code from [redacted/xkcd_password-generator](https://github.com/redacted/xkcd_password-generator) is licensed under the [BSD 3-Clause license](https://github.com/adambirds/xkcd_password-gen/blob/master/LICENSE.BSD).
+This project is released under the [GNU GENERAL PUBLIC LICENSE v3](https://github.com/adambirds/xkcd_password-gen/blob/master/LICENSE). However the original code from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](https://github.com/adambirds/xkcd_password-gen/blob/master/LICENSE.BSD).
