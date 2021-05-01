@@ -103,6 +103,13 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
     * Change package name to `xkcd_pass`.
 * **Version 1.0.7**
     * Change command-line package to `xkcd-pass`.
+* **Version 1.0.9**
+    * Fix issues with README.md badges after rename.
+    * Update `--help` for `MIN_LENGTH` and `MAX_LENGTH`.
+    * Update number of words in password to 4 by default.
+    * Restructured tests into individual files to neaten up codebase.
+    * Added static type annotations to the codebase.
+    * Added support for `zulint` to run various code linters easily.
 
 ## License
 
