@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eu
+
+python3 -m venv xkcd-pass-venv
+if [ -d xkcd-pass-venv/bin ]; then
+	source xkcd-pass-venv/bin/activate
+fi
+pip3 install -r ../../requirements.txt
+./install-shellcheck
+./install-shfmt
