@@ -11,6 +11,8 @@ import sys
 from io import open
 from typing import Any, Callable, Dict, List, Optional, Union
 
+import argcomplete
+
 from xkcd_pass.lib.case import (
     case_alternating,
     case_capitalize,
@@ -489,6 +491,7 @@ def main() -> int:
     try:
         parser = xkcd_passArgumentParser()
 
+        argcomplete.autocomplete(parser)
         options = parser.parse_args()
         options.testing = False
         validate_options(options)

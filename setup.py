@@ -3,6 +3,7 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+install_requires = ["argcomplete"]
 setuptools.setup(
     name="xkcd-pass",
     version="1.0.9",
@@ -26,4 +27,5 @@ setuptools.setup(
     packages=setuptools.find_packages(where="src"),
     include_package_data=True,
     python_requires=">=3.6",
+    install_requires=install_requires,
 )

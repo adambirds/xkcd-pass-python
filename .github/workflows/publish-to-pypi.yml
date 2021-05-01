@@ -23,8 +23,6 @@ jobs:
         sudo tools/setup/install-shfmt
     - name: Install Python dependencies
       uses: py-actions/py-dependency-install@v2
-      with:
-        path: "requirements/dev.txt"
     - name: Run unittests
       run: |
         PYTHONPATH=src pytest

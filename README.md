@@ -80,6 +80,19 @@ A full overview of the available options can be accessed by running following co
 xkcd-pass --help
 ```
 
+## Bash-Completion
+`xkcd-pass` also supports bash-completion. To set this up you need to add the below to your `.bashrc` file:
+
+```
+eval "$(register-python-argcomplete xkcd-pass)"
+```
+
+This will then take effect the next time you login. To enable bash-completion immediately, you can run:
+
+```
+source .bashrc
+```
+
 ## Word Lists
 
 Several word lists are provided with the package. The default, eff-long, was specifically designed by the EFF for [passphrase generation](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases) and is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/). As it was originally intended for use with Diceware ensure that the number of words in your passphrase is at least six when using it. Two shorter variants of that list, eff-short and eff-special, are also included. Please refer to the EFF documentation linked above for more information.

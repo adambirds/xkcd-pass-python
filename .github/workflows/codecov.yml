@@ -26,8 +26,6 @@ jobs:
         sudo tools/setup/install-shfmt
     - name: Install Python dependencies
       uses: py-actions/py-dependency-install@v2
-      with:
-        path: "requirements/dev.txt"
     - name: Generate coverage report
       run: |
         PYTHONPATH=src pytest --cov=./ --cov-report=xml
