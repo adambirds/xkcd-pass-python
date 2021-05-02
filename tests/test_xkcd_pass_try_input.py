@@ -5,8 +5,6 @@ import unittest.mock as mock
 
 from src.xkcd_pass import xkcd_pass
 
-WORDFILE = "src/xkcd_pass/static/eff-long"
-
 
 class TestTryInput(unittest.TestCase):
     """
