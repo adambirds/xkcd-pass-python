@@ -27,7 +27,7 @@ class TestVerboseReports(unittest.TestCase):
 
         self.options = argparse.Namespace(
             numwords=6,
-            verbose=None,
+            verbose=True,
         )
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
@@ -36,7 +36,6 @@ class TestVerboseReports(unittest.TestCase):
         """
         Should display verbose reporting.
         """
-        self.options.verbose = True
         with self.stdout_patcher as mock_stdout:
             xkcd_pass.verbose_reports(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
