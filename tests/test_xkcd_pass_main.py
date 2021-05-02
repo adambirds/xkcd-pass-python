@@ -51,7 +51,7 @@ class TestMain(unittest.TestCase):
             with self.stdout_patcher as mock_stdout:
                 xkcd_pass.main()
         output = mock_stdout.getvalue()
-        self.assertEqual(len(output.strip()), 199)
+        self.assertEqual(len(output.strip()), 225)
 
     def test_main_interactive(self) -> None:
         """

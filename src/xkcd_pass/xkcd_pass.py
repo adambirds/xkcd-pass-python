@@ -155,16 +155,30 @@ def verbose_reports(wordlist: List[str], options: argparse.Namespace) -> None:
     length = len(wordlist)
     numwords = options.numwords
 
-    bits = math.log(length, 2)
+    if options.no_padding_digits == False:
+        length = length + 9
+        numwords = numwords + options.padding_digits_num
+        bits = math.log(length, 2)
+        print("With the current options, your word list contains {0} words.".format(len(wordlist)))
 
-    print("With the current options, your word list contains {0} words.".format(length))
+        print(
+            "A {0} word password from this list with {1} appending digits will have roughly "
+            "{2} ({3:.3f} * {4}) bits of entropy,"
+            "".format(
+                options.numwords, options.padding_digits_num, int(bits * numwords), bits, numwords
+            )
+        )
+        print("assuming truly random word selection.\n")
+    else:
+        bits = math.log(length, 2)
+        print("With the current options, your word list contains {0} words.".format(length))
 
-    print(
-        "A {0} word password from this list will have roughly "
-        "{1} ({2:.2f} * {3}) bits of entropy,"
-        "".format(numwords, int(bits * numwords), bits, numwords)
-    )
-    print("assuming truly random word selection.\n")
+        print(
+            "A {0} word password from this list will have roughly "
+            "{1} ({2:.2f} * {3}) bits of entropy,"
+            "".format(numwords, int(bits * numwords), bits, numwords)
+        )
+        print("assuming truly random word selection.\n")
 
 
 def choose_words(wordlist: List[str], numwords: int) -> List[str]:

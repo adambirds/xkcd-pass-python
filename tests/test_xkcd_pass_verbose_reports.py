@@ -26,14 +26,32 @@ class TestVerboseReports(unittest.TestCase):
         self.options = argparse.Namespace(
             numwords=6,
             verbose=True,
+            no_padding_digits=False,
+            padding_digits_num=2,
         )
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
 
-    def test_verbose_output(self) -> None:
+    def test_verbose_output_with_padding_digits(self) -> None:
         """
-        Should display verbose reporting.
+        Should display verbose reporting with padding digits.
         """
+        with self.stdout_patcher as mock_stdout:
+            xkcd_pass.verbose_reports(wordlist=self.wordlist_small, options=self.options)
+        output = mock_stdout.getvalue()
+        expected_output = """
+With the current options, your word list contains 6 words.
+A 6 word password from this list with 2 appending digits will have roughly 31 (3.907 * 8) bits of entropy,
+assuming truly random word selection.
+""".strip()
+        self.assertEqual(output.strip(), expected_output)
+
+    def test_verbose_output_without_padding_digits(self) -> None:
+        """
+        Should display verbose reporting without padding digits.
+        """
+        self.options.no_padding_digits = True
+        self.options.padding_digits_num = None
         with self.stdout_patcher as mock_stdout:
             xkcd_pass.verbose_reports(wordlist=self.wordlist_small, options=self.options)
         output = mock_stdout.getvalue()
