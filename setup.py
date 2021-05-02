@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 install_requires = ["argcomplete"]
 setuptools.setup(
     name="xkcd-pass",
-    version="1.0.9",
+    version="1.1.0",
     author="Adam Birds",
     author_email="adam.birds@adbwebdesigns.co.uk",
     description="Generate secure multiword passwords/passphrases, inspired by XKCD",

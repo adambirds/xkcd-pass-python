@@ -126,6 +126,12 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
     * Restructured tests into individual files to neaten up codebase.
     * Added static type annotations to the codebase.
     * Added support for `zulint` to run various code linters easily.
+* **Version 1.1.0**
+    * Add support for bash-completion for `xkcd-pass`.
+    * Update github links to correct names in PyPi metadata.
+    * Add tool to prep dev environment.
+    * Add documentation for contributing and development.
+    * Add support for correct entropy for padded digits.
 
 ## License
 
