@@ -1,7 +1,7 @@
 # xkcd-pass
 ![build status](https://github.com/adambirds/xkcd-password-gen/actions/workflows/build.yml/badge.svg)
 [![PyPI version](https://badge.fury.io/py/xkcd-pass.svg)](https://badge.fury.io/py/xkcd_pass)
-[![codecov](https://codecov.io/gh/adambirds/xkcd-password-gen/branch/master/graph/badge.svg?token=4RKK2ABREH)](https://codecov.io/gh/adambirds/xkcd-password-gen)
+[![codecov](https://codecov.io/gh/adambirds/xkcd-password-gen/branch/master/graph/badge.svg?token=Ia2ppYjdkw)](https://codecov.io/gh/adambirds/xkcd-password-gen)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/xkcd-pass)
 [![GitHub release](https://img.shields.io/github/release/adambirds/xkcd-password-gen.svg)](https://github.com/adambirds/xkcd-password-gen/releases/latest)
 [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
