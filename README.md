@@ -64,11 +64,11 @@ It can also be called with a mixture of multiple arguments for example:
 
 ```
 $ xkcd-pass -d _ -c 5 --min 5 --max 7 --padding-digits-num 4
-> Mundane_Music_Spleen1837
-> Reuse_Acclaim_Clarify2492
-> Wildly_Contest_Anchor1798
-> Imprint_Luster_Happy4339
-> Scarf_Strobe_Footer5579
+> Crisped_Harsh_Relearn_Chemist9839
+> Brittle_Deacon_Banker_Amigo4544
+> Ambush_Emptier_Antsy_Walrus2442
+> Donated_Either_Stardom_Duress8549
+> Ether_Prevail_Virtual_Tiger3393
 ```
 
 This will return:
