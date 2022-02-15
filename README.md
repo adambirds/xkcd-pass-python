@@ -137,6 +137,13 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
     * Add tool to prep dev environment.
     * Add documentation for contributing and development.
     * Add support for correct entropy for padded digits.
+* **Version 1.1.1**
+    * Add docs for official discord support server.
+    * Update link to source code in docs to correct typo.
+    * Fix an issue in contributing logs to add an extra step needed.
+    * Fixed issue with codecov badge in docs.
+    * Update example docs to use correct defaults.
+    * Fixed issue with prep-dev-environment script.
 
 ## License
 
