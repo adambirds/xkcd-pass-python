@@ -140,3 +140,7 @@ dmypy.json
 
 !src/xkcd_pass/lib/
 !tools/lib
+
+#node_modules
+
+node_modules/
