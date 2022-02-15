@@ -50,7 +50,7 @@ python setup.py install
 ```
 
 ## Source
-The source code can be found [here](https://github.com/adambirds/xkcd_password-gen).
+The source code can be found [here](https://github.com/adambirds/xkcd-password-gen).
 
 Contributions welcome and gratefully appreciated!
 
