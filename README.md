@@ -31,6 +31,11 @@ Some of the base code that I started with for this project come from [redacted/x
 [xkcd]: https://xkcd.com/936/
 ![](https://imgs.xkcd.com/comics/password_strength.png)
 
+## Support
+For support using this bot, please join our [official support server](https://discord.gg/f5veJaa4ZX) on [Discord](https://discord.com).
+
+[![discord](https://img.shields.io/discord/941885906443468880?color=%237289DA&label=Coding%20With%20Adam&logo=discord&logoColor=white)](https://discord.gg/f5veJaa4ZX)
+
 ## Install
 `xkcd-pass` can easily be installed with the following command:
 
