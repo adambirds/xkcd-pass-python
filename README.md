@@ -6,6 +6,7 @@
 [![GitHub release](https://img.shields.io/github/release/adambirds/xkcd-password-gen.svg)](https://github.com/adambirds/xkcd-password-gen/releases/latest)
 [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![mypy coverage](https://img.shields.io/badge/mypy-100%25-green.svg)](https://github.com/python/mypy)
+![GitHub Sponsors](https://img.shields.io/github/sponsors/adambirds)
 
 A flexible and scriptable password generator which generates strong passphrases, inspired by [XKCD 936][xkcd].
 
