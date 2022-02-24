@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 install_requires = ["argcomplete"]
 setuptools.setup(
     name="xkcd-pass",
-    version="1.1.1",
+    version="1.1.2",
     author="Adam Birds",
     author_email="adam.birds@adbwebdesigns.co.uk",
     description="Generate secure multiword passwords/passphrases, inspired by XKCD",
@@ -19,7 +19,13 @@ setuptools.setup(
     license="LGPLv3",
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Programming Language :: Python",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
     ],
     entry_points={"console_scripts": ["xkcd-pass=xkcd_pass.xkcd_pass:main"]},

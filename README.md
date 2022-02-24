@@ -145,6 +145,10 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
     * Fixed issue with codecov badge in docs.
     * Update example docs to use correct defaults.
     * Fixed issue with prep-dev-environment script.
+* **Version 1.1.2**
+    * Fix dependency issues.
+    * Add more PyPi classifiers.
+    * Make CI run tests on multiple Python versions.
 
 ## License
 
