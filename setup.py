@@ -6,15 +6,15 @@ with open("README.md", "r", encoding="utf-8") as fh:
 install_requires = ["argcomplete"]
 setuptools.setup(
     name="xkcd-pass",
-    version="1.1.2",
+    version="1.1.3",
     author="Adam Birds",
     author_email="adam.birds@adbwebdesigns.co.uk",
     description="Generate secure multiword passwords/passphrases, inspired by XKCD",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/adambirds/xkcd-password-gen",
+    url="https://github.com/adambirds/xkcd-pass-python",
     project_urls={
-        "Bug Tracker": "https://github.com/adambirds/xkcd-password-gen/issues",
+        "Bug Tracker": "https://github.com/adambirds/xkcd-pass-python/issues",
     },
     license="LGPLv3",
     classifiers=[

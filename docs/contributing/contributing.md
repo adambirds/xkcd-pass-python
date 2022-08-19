@@ -34,7 +34,7 @@ source xkcd-password-gen/bin/activate
 
 The middle command will setup some commit hooks to run our linters on any changed files before
 the commit and then run the linters on your commit message to ensure it meets our
-commit message guidelines. You can read our guidelines [here](https://github.com/adambirds/xkcd-password-gen/blob/master/docs/contributing/commit-guidelines.md).
+commit message guidelines. You can read our guidelines [here](https://github.com/adambirds/xkcd-pass-python/blob/master/docs/contributing/commit-guidelines.md).
 
 ## Linters and Tests
 

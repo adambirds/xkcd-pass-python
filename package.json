@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adambirds/xkcd-password-gen.git"
+    "url": "git+https://github.com/adambirds/xkcd-pass-python.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adambirds/xkcd-password-gen/issues"
+    "url": "https://github.com/adambirds/xkcd-pass-python/issues"
   },
-  "homepage": "https://github.com/adambirds/xkcd-password-gen#readme"
+  "homepage": "https://github.com/adambirds/xkcd-pass-python#readme"
 }

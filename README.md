@@ -1,9 +1,9 @@
 # xkcd-pass
-![build status](https://github.com/adambirds/xkcd-password-gen/actions/workflows/build.yml/badge.svg)
+![build status](https://github.com/adambirds/xkcd-pass-python/actions/workflows/build.yml/badge.svg)
 [![PyPI version](https://badge.fury.io/py/xkcd-pass.svg)](https://badge.fury.io/py/xkcd_pass)
-[![codecov](https://codecov.io/gh/adambirds/xkcd-password-gen/branch/master/graph/badge.svg?token=Ia2ppYjdkw)](https://codecov.io/gh/adambirds/xkcd-password-gen)
+[![codecov](https://codecov.io/gh/adambirds/xkcd-pass-python/branch/master/graph/badge.svg?token=Ia2ppYjdkw)](https://codecov.io/gh/adambirds/xkcd-pass-python)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/xkcd-pass)
-[![GitHub release](https://img.shields.io/github/release/adambirds/xkcd-password-gen.svg)](https://github.com/adambirds/xkcd-password-gen/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/adambirds/xkcd-pass-python.svg)](https://github.com/adambirds/xkcd-pass-python/releases/latest)
 [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![mypy coverage](https://img.shields.io/badge/mypy-100%25-green.svg)](https://github.com/python/mypy)
 ![GitHub Sponsors](https://img.shields.io/github/sponsors/adambirds)
@@ -15,7 +15,7 @@ $ xkcd-pass
 > DenotePetroleumMournfulStoreroom47
 ```
 
-Whilst this password generator is inspired by [XKCD 936][xkcd], its defaults have been configured in a way which gives this tool the most compatibility out of the box with the majority of services we use passwords for today. The faults that we have set are:
+Whilst this password generator is inspired by [XKCD 936][xkcd], its defaults have been configured in a way which gives this tool the most compatibility out of the box with the majority of services we use passwords for today. The defaults that we have set are:
 * Phrase containing 4 words between 5 and 9 characters (The default wordfile `eff-long` only contains words between 5 and 9 characters).
 * The first letter of each word is capitalized.
 * The passphrase is ended with two random digits.
@@ -51,7 +51,7 @@ python setup.py install
 ```
 
 ## Source
-The source code can be found [here](https://github.com/adambirds/xkcd-password-gen).
+The source code can be found [here](https://github.com/adambirds/xkcd-pass-python).
 
 Contributions welcome and gratefully appreciated!
 
@@ -149,12 +149,14 @@ Note that `xkcd-pass` can be used with any word file of the correct format: a fi
     * Fix dependency issues.
     * Add more PyPi classifiers.
     * Make CI run tests on multiple Python versions.
+* **Version 1.1.3**
+    * Rename the GitHub repository to `xkcd-pass-python` from `xkcd-password-gen`.
 
 ## License
 
-This project is released under the [GNU GENERAL PUBLIC LICENSE v3](https://github.com/adambirds/xkcd-password-gen/blob/master/LICENSE). However the original code from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](https://github.com/adambirds/xkcd-password-gen/blob/master/LICENSE.BSD).
+This project is released under the [GNU GENERAL PUBLIC LICENSE v3](https://github.com/adambirds/xkcd-pass-python/blob/master/LICENSE). However the original code from [redacted/xkcd-password-generator](https://github.com/redacted/XKCD-password-generator) is licensed under the [BSD 3-Clause license](https://github.com/adambirds/xkcd-pass-python/blob/master/LICENSE.BSD).
 
 ## Contributing
 
 Anybody is welcome to contribute to this project. I just ask that you check out our contributing guidelines
-[here](https://github.com/adambirds/xkcd-password-gen/blob/master/docs/contributing/contributing.md) first.
+[here](https://github.com/adambirds/xkcd-pass-python/blob/master/docs/contributing/contributing.md) first.
