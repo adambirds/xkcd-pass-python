@@ -20,7 +20,10 @@ class TestVerboseReports(unittest.TestCase):
         Set up fixtures for this test case.
         """
         self.wordlist_small = xkcd_pass.generate_wordlist(
-            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
+            wordfile="test_list", 
+            min_length=5,
+            max_length=9,
+            valid_chars="[a-z]"
         )
 
         self.options = argparse.Namespace(
