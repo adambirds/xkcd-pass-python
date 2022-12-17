@@ -6,6 +6,7 @@ import unittest
 import unittest.mock as mock
 
 from src.xkcd_pass import xkcd_pass
+from xkcd_pass.lib.xkcd_default import DEFAULT_WORDFILE
 
 
 class TestValidateOptions(unittest.TestCase):
@@ -21,21 +22,30 @@ class TestValidateOptions(unittest.TestCase):
         Set up fixtures for this test case.
         """
         self.wordlist_small = xkcd_pass.generate_wordlist(
-            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
+            wordfile="test_list", 
+            min_length=5,
+            max_length=9,
+            valid_chars="[a-z]"
         )
 
         self.options_incorrect_length = argparse.Namespace(
-            max_length=6, min_length=7, wordfile="src/xkcd_pass/static/test_list"
+            wordfile="test_list", 
+            min_length=7,
+            max_length=6,
+            valid_chars="[a-z]"
         )
 
         self.options_incorrect_wordfile = argparse.Namespace(
-            max_length=7, min_length=7, wordfile="src/xkcd_pass/static/test_list2"
+            wordfile="test_list2", 
+            min_length=7,
+            max_length=7,
+            valid_chars="[a-z]"
         )
 
         self.options_default_wordfile = argparse.Namespace(
             max_length=7,
             min_length=7,
-            wordfile=None,
+            wordfile=None
         )
 
         self.stdout_patcher = mock.patch.object(sys, "stdout", new_callable=io.StringIO)
@@ -60,7 +70,7 @@ class TestValidateOptions(unittest.TestCase):
         """
         Testing validate options default_wordfile.
         """
-        xkcd_pass.DEFAULT_WORDFILE = "eff-long"
+        xkcd_pass.DEFAULT_WORDFILE = DEFAULT_WORDFILE
         with self.stdout_patcher as mock_stdout:
             xkcd_pass.validate_options(
                 options=self.options_default_wordfile,
