@@ -5,7 +5,7 @@ import unittest
 import unittest.mock as mock
 
 from src.xkcd_pass import xkcd_pass
-
+from xkcd_pass.lib.xkcd_default import DEFAULT_WORDFILE
 
 class TestInteractiveInitialization(unittest.TestCase):
     """
@@ -19,8 +19,11 @@ class TestInteractiveInitialization(unittest.TestCase):
         """
         Set up fixtures for this test case.
         """
-        self.wordlist_small = xkcd_pass.generate_wordlist(
-            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
+        self.wordlist_full = xkcd_pass.generate_wordlist(
+            wordfile=DEFAULT_WORDFILE,
+            min_length=5,
+            max_length=8,
+            valid_chars="[a-z]"
         )
 
         self.options = argparse.Namespace(
