@@ -1,11 +1,11 @@
-3  #!/usr/bin/env python
+#!/usr/bin/env python
 # encoding: utf-8
 
 import argparse
 import math
 import os
 import os.path
-import random
+from random import SystemRandom as random_number_generator
 import re
 import sys
 from io import open
@@ -13,16 +13,31 @@ from typing import Any, Callable, Dict, List, Optional, Union
 
 import argcomplete
 
+from xkcd_pass.lib.xkcd_default import (
+    DEFAULT_WORDFILE,
+    MIN_LENGTH, 
+    MAX_LENGTH, 
+    NUM_WORDS,
+    NO_PADDING_DIGITS,
+    PADDING_DIGITS_NUM,
+    INTERACTIVE,
+    VALID_CHARS,
+    VERBOSE,
+    COUNT,
+    DELIM,
+    SEP,
+    CASE
+)
+
+
 from xkcd_pass.lib.case import (
     case_alternating,
     case_capitalize,
     case_first_upper,
     case_lower,
     case_random,
-    case_upper,
+    case_upper
 )
-
-DEFAULT_WORDFILE = "eff-long"
 
 CASE_METHODS: Dict[str, Callable[[List[str]], List[str]]] = {
     "alternating": case_alternating,
@@ -32,8 +47,6 @@ CASE_METHODS: Dict[str, Callable[[List[str]], List[str]]] = {
     "first": case_first_upper,
     "capitalize": case_capitalize,
 }
-
-random_number_generator = random.SystemRandom
 
 if sys.version_info[0] >= 3:
     raw_input = input
@@ -50,11 +63,12 @@ def validate_options(options: argparse.Namespace, testing: bool = False) -> None
             "Warning: maximum word length less than minimum.\n"
             "Setting maximum equal to minimum.\n"
         )
+        options.max_length = options.min_length
         # sys.exit(1)
 
     wordfile = locate_wordfile(wordfile=options.wordfile)
     if not wordfile:
-        print("Could not find a word file, or word file does " "not exist.\n")
+        print("Could not find a word file, or word file does not exist.\n")
         sys.exit(1)
 
     if testing == True:
@@ -92,6 +106,7 @@ def locate_wordfile(wordfile: str = None) -> Optional[str]:
             if os.path.isfile(wfile):
                 wfilecheck = True
                 finalwfile = wfile
+                break
             else:
                 if count == length:
                     wfilecheck = True
@@ -122,8 +137,7 @@ def set_case(
 
 
 def generate_wordlist(
-    wordfile: str, min_length: int = 5, max_length: int = 9, valid_chars: str = "."
-) -> List[str]:
+    wordfile: str, min_length: int, max_length: int, valid_chars) -> List[str]:
     """
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
@@ -193,9 +207,9 @@ def generate_random_padding_numbers(padding_digits_num: int) -> int:
     """
     Get random numbers to append to passphrase
     """
-    min = pow(10, padding_digits_num - 1)
-    max = pow(10, padding_digits_num) - 1
-    return random_number_generator().randint(a=min, b=max)
+    randmin = pow(10, padding_digits_num - 1)
+    randmax = pow(10, padding_digits_num - 1)
+    return random_number_generator().randint(a=randmin, b=randmax)
 
 
 def try_input(
@@ -375,7 +389,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "-w",
             "--wordfile",
             dest="wordfile",
-            default=None,
+            default=DEFAULT_WORDFILE,
             metavar="WORDFILE",
             help=(
                 "Specify that the file WORDFILE contains the list"
@@ -388,7 +402,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--min",
             dest="min_length",
             type=int,
-            default=5,
+            default=MIN_LENGTH,
             metavar="MIN_LENGTH",
             help="Generate passphrases containing words of at least MIN_LENGTH characters.",
         )
@@ -396,7 +410,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--max",
             dest="max_length",
             type=int,
-            default=9,
+            default=MAX_LENGTH,
             metavar="MAX_LENGTH",
             help="Generate passphrases containing words of at most MAX_LENGTH characters.",
         )
@@ -405,7 +419,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--numwords",
             dest="numwords",
             type=int,
-            default=4,
+            default=NUM_WORDS,
             metavar="NUM_WORDS",
             help="Generate passphrases containing exactly NUM_WORDS words.",
         )
@@ -413,14 +427,14 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--no-padding-digits",
             action="store_true",
             dest="no_padding_digits",
-            default=False,
+            default=NO_PADDING_DIGITS,
             help="Doesn't append digits to end of passphrase.",
         )
         self.add_argument(
             "--padding-digits-num",
             dest="padding_digits_num",
             type=int,
-            default=2,
+            default=PADDING_DIGITS_NUM,
             metavar="PADDING_DIGITS_NUM",
             help="Length of digits to append to end of passphrase.",
         )
@@ -429,7 +443,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--interactive",
             action="store_true",
             dest="interactive",
-            default=False,
+            default=INTERACTIVE,
             help=(
                 "Generate and output a passphrase, query the user to"
                 " accept it, and loop until one is accepted."
@@ -439,7 +453,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "-v",
             "--valid-chars",
             dest="valid_chars",
-            default=".",
+            default=VALID_CHARS,
             metavar="VALID_CHARS",
             help=(
                 "Limit passphrases to only include words matching the regex"
@@ -451,7 +465,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--verbose",
             action="store_true",
             dest="verbose",
-            default=False,
+            default=VERBOSE,
             help="Report various metrics for given options.",
         )
         self.add_argument(
@@ -459,7 +473,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "--count",
             dest="count",
             type=int,
-            default=1,
+            default=COUNT,
             metavar="COUNT",
             help="Generate COUNT passphrases.",
         )
@@ -467,7 +481,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "-d",
             "--delimiter",
             dest="delimiter",
-            default="",
+            default=DELIM,
             metavar="DELIM",
             help="Separate words within a passphrase with DELIM.",
         )
@@ -475,7 +489,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             "-s",
             "--separator",
             dest="separator",
-            default="\n",
+            default=SEP,
             metavar="SEP",
             help="Separate generated passphrases with SEP.",
         )
@@ -486,7 +500,7 @@ class xkcd_passArgumentParser(argparse.ArgumentParser):
             type=str,
             metavar="CASE",
             choices=list(CASE_METHODS.keys()),
-            default="first",
+            default=CASE,
             help=(
                 "Choose the method for setting the case of each word "
                 "in the passphrase. "

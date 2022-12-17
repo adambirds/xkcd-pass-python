@@ -6,7 +6,6 @@ import unittest.mock as mock
 
 from src.xkcd_pass import xkcd_pass
 
-
 class TestEmitPasswords(unittest.TestCase):
     """
     Test cases for function `emit_passwords`.
@@ -20,7 +19,10 @@ class TestEmitPasswords(unittest.TestCase):
         Set up fixtures for this test case.
         """
         self.wordlist_small = xkcd_pass.generate_wordlist(
-            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
+            wordfile="test_list", 
+            min_length=5,
+            max_length=9,
+            valid_chars="[a-z]"
         )
 
         self.wordlist_small_max_min_length = xkcd_pass.generate_wordlist(
