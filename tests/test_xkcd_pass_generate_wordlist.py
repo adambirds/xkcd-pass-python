@@ -1,9 +1,7 @@
 import unittest
 
 from src.xkcd_pass import xkcd_pass
-
-WORDFILE = "src/xkcd_pass/static/eff-long"
-
+from xkcd_pass.lib.xkcd_default import DEFAULT_WORDFILE
 
 class TestGenerateWordlist(unittest.TestCase):
     """
@@ -18,19 +16,23 @@ class TestGenerateWordlist(unittest.TestCase):
         Set up fixtures for this test case.
         """
         self.wordlist_full = xkcd_pass.generate_wordlist(
-            wordfile=WORDFILE,
+            wordfile=DEFAULT_WORDFILE,
             min_length=5,
             max_length=8,
+            valid_chars="[a-z]"
         )
         self.wordlist_small = xkcd_pass.generate_wordlist(
-            wordfile="src/xkcd_pass/static/test_list", valid_chars="[a-z]"
+            wordfile="test_list", 
+            min_length=5,
+            max_length=9,
+            valid_chars="[a-z]"
         )
 
     def test_loadwordfile(self) -> None:
         """
         Test load wordlist is correct.
         """
-        self.assertEqual(len(self.wordlist_full), 5670)
+        self.assertEqual(len(self.wordlist_full), 5667)
 
     def test_regex(self) -> None:
         """
